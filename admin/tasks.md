@@ -17,8 +17,6 @@ Duo Liu:
 
 ## Week 6
 
-...
-
 ## Mid-Semester Break
 
 ## Week 7
