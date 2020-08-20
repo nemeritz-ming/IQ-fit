@@ -1,5 +1,6 @@
 package comp1110.ass2;
 
+import javax.swing.*;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -24,7 +25,18 @@ public class FitGame {
      * @return True if the piece placement is well-formed
      */
     static boolean isPiecePlacementWellFormed(String piecePlacement) {
-        return false; // FIXME Task 2: determine whether a piece placement is well-formed
+        if (piecePlacement.length() != 4)
+            return false;
+        char C1 = piecePlacement.toUpperCase().charAt(0), C2 = piecePlacement.charAt(1), C3 = piecePlacement.charAt(2), C4 = piecePlacement.charAt(3);
+        if (C1!='B' && C1!='R' && C1!='G' && C1!='I' && C1!='L' && C1!='N' && C1!='O' && C1!='P' && C1!='S' && C1!='Y')
+            return false;
+        if (C2<48 || C2>57)
+            return false;
+        if (C3!='0' && C3!='1' && C3!='2' && C3!='3' && C3!='4')
+            return false;
+        if (C4!='N' && C4!='S' && C4!='E' && C4!='W')
+            return false;
+        return true; // FIXME Task 2: determine whether a piece placement is well-formed
     }
 
     /**
@@ -38,7 +50,33 @@ public class FitGame {
      * @return True if the placement is well-formed
      */
     public static boolean isPlacementWellFormed(String placement) {
-        return false; // FIXME Task 3: determine whether a placement is well-formed
+        if (placement.length()%4 != 0 || placement.length()==0){
+            return false;
+        }
+        int N = placement.length() / 4;
+        String temp;
+        for (int i = 0; i < N; i++){
+            for (int j = i + 1; j < N; j++){
+                if (placement.charAt(i*4) == placement.charAt(j*4))
+                    return false;
+                if ((int)placement.charAt(i*4) >= 91 && (int)placement.charAt(j*4) <= 'Z'){
+                    if (placement.charAt(i*4)-32 > placement.charAt(j*4))
+                        return false;
+                }
+                else if (placement.charAt(i*4) <= 'Z' && placement.charAt(j*4) >= 'a'){
+                    if (placement.charAt(i*4)>placement.charAt(j*4)-32)
+                        return false;
+                }
+                else {
+                    if (placement.charAt(i*4)>placement.charAt(j*4))
+                        return false;
+                }
+            }
+            temp = placement.substring(i*4, i*4 +4);
+            if (!isPiecePlacementWellFormed(temp))
+                return false;
+        }
+        return true; // FIXME Task 3: determine whether a placement is well-formed
     }
 
     /**
