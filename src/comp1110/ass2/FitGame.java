@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.util.HashSet;
 import java.util.Set;
 
+
+
+
 /**
  * This class provides the text interface for the IQ Fit Game
  * <p>
@@ -11,6 +14,7 @@ import java.util.Set;
  * (https://www.smartgames.eu/uk/one-player-games/iq-fit)
  */
 public class FitGame {
+    public boolean Board[][] = new boolean[5][10];
 
     /**
      * Determine whether a piece placement is well-formed according to the
@@ -24,6 +28,41 @@ public class FitGame {
      * @param piecePlacement A string describing a piece placement
      * @return True if the piece placement is well-formed
      */
+
+
+    /**
+     * Add a new piece on the board, this will include checking
+     * if the placement viable. If so, the method will update
+     * the board[][] as well as update the string
+     *
+     * @param: the current String that describe piece on the
+     *          board, the piece that want to add
+     * @return The new string, it will not change if the placement
+     *           is not viable.
+     */
+    public String AddtoBoard(String currentString, Piece PieceName){
+        return null;
+    }
+
+    /**
+     * Move a piece from the board, this will include surch
+     * the piece from String. If find the piece, the method will update
+     * the board[][] as well as update the string
+     *
+     * @param: the current String that describe piece on the
+     *          board, the piece that want to move away
+     * @return The new string, it will not change if the placement
+     *           is not viable.
+     */
+
+    public String MovefromBoard(String currentString, Piece PieceName){
+        return null;
+    }
+
+
+
+
+
     static boolean isPiecePlacementWellFormed(String piecePlacement) {
         if (piecePlacement.length() != 4)
             return false;
@@ -126,4 +165,5 @@ public class FitGame {
     public static String getSolution(String challenge) {
         return null;  // FIXME Task 9: determine the solution to the game, given a particular challenge
     }
+
 }
