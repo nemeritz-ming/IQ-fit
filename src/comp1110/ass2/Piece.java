@@ -7,21 +7,20 @@ package comp1110.ass2;
 public class Piece {
     private final char pieceName = 0;
     public final boolean Spotsposition[][] = new boolean[4][4];
-    private Direction orientation;
+    private Direction orientation = Direction.NORTH;//Default orientation is North
+    private int LeftPos = -1, UpperPos = -1; //This field record theUpLeft position of the piece if it has been put on the board, otherwise it will be -1
 
-
-    public Piece(char pieceName, Direction orientation, boolean  Spotsposition[][]){
+    public Piece(char pieceName, boolean  Spotsposition[][]){
 
     }
     /**
-     * Given the new direction of the piece,
-     * update the orientation field of the piece.
+     * Given the new direction and position of the piece,
+     * update the orientation and LeftPos, UpperPos field of the piece.
      *
-     * @param: direction that want the piece put into.
+     * @param: the orientation and position that want the piece put into.
      * @return void.
      */
-    public void ChangeDirection(char thisPieceDir){
-    }
+    public void ChangeDirandPos(String PieceStatement){ }
     public char getPieceName(){
         return pieceName;
     }
@@ -57,6 +56,15 @@ public class Piece {
     public boolean IsPiecetaken(String CurrentOnboard){
         return true;
     }
+
+
+    /**
+     * Transfer a piece's statment to String such as b73E
+     *
+     * @param: null.
+     * @return the 4 char String that include position, name and orientation.
+     */
+    public String PiecetoString(){return null;}
 
 
 }

@@ -59,6 +59,16 @@ public class FitGame {
         return null;
     }
 
+    /**
+     * Read the current string and update the board
+     * This method is prepared for initialize the game
+     * @param: the current String that describe piece on the
+     *          board
+     * @return void
+     */
+    public void StringToBoard(String currentString, Piece PieceName){}
+
+
 
 
 
