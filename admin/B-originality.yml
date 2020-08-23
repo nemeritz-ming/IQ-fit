@@ -27,7 +27,6 @@ declaration: >-
 #
 # Add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external code)
-code: we used assigenment initual skeleten as reference
 
 # Use this to list any assets (artwork, sound, etc) that you used.
 # Provide a comment explaining your use of that asset and the URL
@@ -36,7 +35,8 @@ code: we used assigenment initual skeleten as reference
 # Add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external assets)
 
-
+Others: >-
+  We used assigenment 1 initial skeleton as reference
 
 # Sign *your* name and uids here. (Remove entries if you have fewer
 # than three members.)
