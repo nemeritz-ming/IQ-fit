@@ -1,6 +1,6 @@
 package gittest;
 
 public class Main {
-    C a = new C();
+    C c = new C();
     A a = new A();
 }
