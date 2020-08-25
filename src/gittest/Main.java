@@ -1,9 +1,5 @@
 package gittest;
 
 public class Main {
-    A a = new A();
-    B b = new B();
-
-
-
+   B b = new B();
 }
