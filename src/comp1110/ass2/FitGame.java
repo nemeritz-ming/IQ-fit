@@ -17,20 +17,6 @@ public class FitGame {
     public boolean Board[][] = new boolean[5][10];
 
     /**
-     * Determine whether a piece placement is well-formed according to the
-     * following criteria:
-     * - it consists of exactly four characters
-     * - the first character is a valid piece descriptor character (b, B, g, G, ... y, Y)
-     * - the second character is in the range 0 .. 9 (column)
-     * - the third character is in the range 0 .. 4 (row)
-     * - the fourth character is in valid orientation N, S, E, W
-     *
-     * @param piecePlacement A string describing a piece placement
-     * @return True if the piece placement is well-formed
-     */
-
-
-    /**
      * Add a new piece on the board, this will include checking
      * if the placement viable. If so, the method will update
      * the board[][] as well as update the string
@@ -69,9 +55,18 @@ public class FitGame {
     public void StringToBoard(String currentString, Piece PieceName){}
 
 
-
-
-
+    /**
+     * Determine whether a piece placement is well-formed according to the
+     * following criteria:
+     * - it consists of exactly four characters
+     * - the first character is a valid piece descriptor character (b, B, g, G, ... y, Y)
+     * - the second character is in the range 0 .. 9 (column)
+     * - the third character is in the range 0 .. 4 (row)
+     * - the fourth character is in valid orientation N, S, E, W
+     *
+     * @param piecePlacement A string describing a piece placement
+     * @return True if the piece placement is well-formed
+     */
 
     static boolean isPiecePlacementWellFormed(String piecePlacement) {
         if (piecePlacement.length() != 4)
@@ -175,5 +170,39 @@ public class FitGame {
     public static String getSolution(String challenge) {
         return null;  // FIXME Task 9: determine the solution to the game, given a particular challenge
     }
-
+    /**
+     * Solution design
+     *
+     * Given the current placement
+     * getTopLeftCorner method is to find the the most top left position which is not placed on any pieces.
+     *
+     * @param placement A starting placement string
+     * @return A length 2 integer array represents the non-zero top left position
+     * return the position if the Top left position exists and it is not placed on any piece
+     * or return null if there is no such a position
+     */
+    public static int[] getTopLeftcorner(String placement){
+        return null;
+    }
+    /** we are going to use DFS to solve this puzzle
+     * String DFS(String challenge){}
+     * Given a string challenge, we first convert it into a board matrix (5*10)
+     * Second, check all pieces on the board and determine which pieces are not on the board
+     * create a hashset to store the pieces that we are going to select
+     * find the left top position that is not placed on any pieces on the current board matrix
+     * if there is no such a position exists, it  means every entry of the board matrix is full
+     * then return current string placement
+     * if return a top left position, we use getViablePiecePlacements() to find possible pieces set
+     * then we use a for loop to select appropriate piece in the set that can be put on the board according to the piece type order
+     * if this piece is not in the hashset
+     * add the selected piece to the board, also add it to the hashset
+     * update the board matrix and corresponding string newplacement
+     * recursively to find the new piece: DFS(Sting newplacement)
+     * if we cannot find the piece we need, we should traceback to the last top left position and continue the for loop to select new piece
+     * delete the previously selected piece from the board
+     * update the board matrix
+     * update new string placement
+     * also delete it from the hashset
+     * end the for loop
+     */
 }
