@@ -113,8 +113,6 @@ public class FitGame {
     }
 
 
-
-
     /**
      * Determine whether a piece placement is well-formed according to the
      * following criteria:
