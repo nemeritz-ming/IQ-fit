@@ -4,70 +4,45 @@ package comp1110.ass2;
  * This class define a piece
  */
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Piece {
-    private final char pieceName = 0;
-    public final boolean Spotsposition[][] = new boolean[4][4];
-    private Direction orientation = Direction.NORTH;//Default orientation is North
-    private int LeftPos = -1, UpperPos = -1; //This field record theUpLeft position of the piece if it has been put on the board, otherwise it will be -1
-
-    public Piece(char pieceName, boolean  Spotsposition[][]){
-
+    private final int topLeftX;
+    private final int topLeftY;
+    private final String typeName;
+    public Piece(String piecePlacement){
+        this.topLeftX = Character.getNumericValue(piecePlacement.charAt(1));
+        this.topLeftY = Character.getNumericValue(piecePlacement.charAt(2));
+        this.typeName = piecePlacement.charAt(0) + String.valueOf(piecePlacement.charAt(3));
     }
-    /**
-     * Given the new direction and position of the piece,
-     * update the orientation and LeftPos, UpperPos field of the piece.
-     *
-     * @param: the orientation and position that want the piece put into.
-     * @return void.
-     */
-    public void ChangeDirandPos(String PieceStatement){ }
-    public char getPieceName(){
-        return pieceName;
+    public int[][] toMatrix(){
+        Map<String, int[][]> map = new HashMap<>();
+        map.put("bN",new int[][] {{1,1,1,1},{1,0,0,0},{0,0,0,0},{0,0,0,0}});
+        map.put("bE",new int[][] {{1,1,0,0},{0,1,0,0},{0,1,0,0},{0,1,0,0}});
+        for (Map.Entry<String, int[][]> entry : map.entrySet()){
+            if(entry.getKey().equals(typeName)){
+                return entry.getValue();
+            }
+        }
+        return null;
     }
-    public Direction getOrientation(){
-        return orientation;
+    public int getTopLeftX(){
+        return topLeftX;
     }
-
-
-    /**
-     * Calculate the Boolean table according to the orientation
-     * and the Spotsposition array of the piece
-     * The method includes rotation and translation of the
-     * array’s valu
-     *
-     * @param: None.
-     * @return A 4*4 boolean array that describe the piece
-     * in the current orientation.
-     */
-    public boolean[][] GetCurrentPos(){
-        return Spotsposition;
+    public int getTopLeftY(){
+        return topLeftY;
     }
 
-
-
-    /**
-     * Check if the piece has been used in another flip
-     * e.g. For piece B, if b is already in the String, return
-     * false
-     * @param: the current String that describe piece on the board.
-     * @return the answer.
-     */
-
-    public boolean IsPiecetaken(String CurrentOnboard){
-        return true;
+    public static void main(String[] args) {
+        Piece A = new Piece("b23E");
+        System.out.println(A.topLeftX);
+        System.out.println(A.topLeftY);
+        System.out.println(A.typeName);
+        System.out.println(A.toMatrix()[0][1]);
     }
-
-
-    /**
-     * Transfer a piece's statment to String such as b73E
-     *
-     * @param: null.
-     * @return the 4 char String that include position, name and orientation.
-     */
-    public String PiecetoString(){return null;}
-
-
 }
+
 
 
 
