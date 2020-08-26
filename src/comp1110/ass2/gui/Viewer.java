@@ -12,10 +12,15 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
+import javafx.scene.transform.Rotate;
+import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A very simple viewer for piece placements in the IQ-Fit game.
@@ -44,25 +49,61 @@ public class Viewer extends Application {
      */
     void makePlacement(String placement){
         root.getChildren().clear();
+        Character[] arr1 = {'b','o','p','r','s','y'};
+        Set<Character> setFour = new HashSet<>(Arrays.asList(arr1));
         char color = placement.charAt(0);
         char rotate = placement.charAt(3);
+        int x = Character.getNumericValue(placement.charAt(1));
+        int y = Character.getNumericValue(placement.charAt(2));
         int rotatetimes;
         String type;
         if (Character.isLowerCase(color)){ type = String.valueOf(color).toUpperCase()+"1";}
         else{type = String.valueOf(color).toUpperCase()+"2";}
+        Image Board =  new Image(Viewer.class.getResource(URI_BASE  + "board.png").toString());
+        ImageView imageBoard = new ImageView(Board);
+        imageBoard.setX(60);
+        imageBoard.setY(60);
+        imageBoard.setFitHeight(300);
+        imageBoard.setFitWidth(600);
         Image image = new Image(Viewer.class.getResource(URI_BASE + type + ".png").toString());
-        ImageView imageView = new ImageView(image);
-        imageView.setX(200);
-        imageView.setY(110);
-        imageView.setFitHeight(150);
-        imageView.setFitWidth(300);
-        if (rotate == 'E'){rotatetimes = 1;}
-        else if (rotate == 'S'){rotatetimes = 2;}
-        else if (rotate == 'W'){rotatetimes = 3;}
-        else{rotatetimes = 0;}
-        imageView.setRotate(imageView.getRotate()+rotatetimes*90);
-        root.getChildren().add(imageView);
+        ImageView imagePiece = new ImageView(image);
+        if (setFour.contains(Character.toLowerCase(color))){
+            imagePiece.setFitHeight(102);
+            imagePiece.setFitWidth(204);
+        }else{
+            imagePiece.setFitHeight(102);
+            imagePiece.setFitWidth(153);
+        }
+        imagePiece.setX(102+x*51);
+        imagePiece.setY(75+y*51);
+        Rotate rot = new Rotate();
+        Translate translate = new Translate();
+        if (rotate == 'E'){
+            rot.setAngle(90);
+            rot.setPivotX(imagePiece.getX()+imagePiece.getFitHeight());
+            rot.setPivotY(imagePiece.getY());
+            translate.setX(imagePiece.getFitHeight());
+            imagePiece.getTransforms().addAll(rot,translate);
+        }
+        else if (rotate == 'S'){
+            rot.setAngle(180);
+            rot.setPivotX(imagePiece.getX()+imagePiece.getFitWidth());
+            rot.setPivotY(imagePiece.getY()+imagePiece.getFitHeight());
+            translate.setX(imagePiece.getFitWidth());
+            translate.setY(imagePiece.getFitHeight());
+            imagePiece.getTransforms().addAll(rot,translate);
+        }
+        else if (rotate == 'W'){
+            rot.setAngle(270);
+            rot.setPivotX(imagePiece.getX());
+            rot.setPivotY(imagePiece.getY()+imagePiece.getFitWidth());
+            translate.setY(imagePiece.getFitWidth());
+            imagePiece.getTransforms().addAll(rot,translate);
+        }
+        root.getChildren().add(imageBoard);
+        root.getChildren().add(imagePiece);
         root.getChildren().add(controls);
+
         // FIXME Task 4: implement the simple placement viewer
         //
     }
