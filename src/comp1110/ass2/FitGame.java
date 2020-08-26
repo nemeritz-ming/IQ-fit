@@ -240,6 +240,7 @@ public class FitGame {
                 }
             }
         }
+
         return true; // FIXME Task 5: determine whether a placement string is valid
     }
 
