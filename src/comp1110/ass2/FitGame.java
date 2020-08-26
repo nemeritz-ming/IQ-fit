@@ -26,7 +26,7 @@ public class FitGame {
      * @return The new string, it will not change if the placement
      *           is not viable.
      */
-    public String addToBoard(String currentString, Piece PieceName){
+    public String addToBoard(String currentString, Piece pieceName){
         return null;
     }
 
@@ -41,7 +41,7 @@ public class FitGame {
      *           is not viable.
      */
 
-    public String moveFromBoard(String currentString, Piece PieceName){
+    public String moveFromBoard(String currentString, Piece pieceName){
         return null;
     }
 

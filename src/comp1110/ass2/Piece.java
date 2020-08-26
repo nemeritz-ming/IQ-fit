@@ -6,11 +6,11 @@ package comp1110.ass2;
 
 public class Piece {
     private final char pieceName = 0;
-    public final boolean Spotsposition[][] = new boolean[4][4];
+    public final boolean spotsPosition[][] = new boolean[4][4];
     private Direction orientation = Direction.NORTH;//Default orientation is North
     private int LeftPos = -1, UpperPos = -1; //This field record theUpLeft position of the piece if it has been put on the board, otherwise it will be -1
 
-    public Piece(char pieceName, boolean  Spotsposition[][]){
+    public Piece(char pieceName, boolean  spotsPosition[][]){
 
     }
     /**
@@ -40,7 +40,7 @@ public class Piece {
      * in the current orientation.
      */
     public boolean[][] getCurrentPos(){
-        return Spotsposition;
+        return spotsPosition;
     }
 
 
