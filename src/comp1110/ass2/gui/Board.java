@@ -21,7 +21,8 @@ public class Board extends Application {
     // FIXME Task 10: Implement hints (should become visible when the user presses '/' -- see gitlab issue for details)
 
     // FIXME Task 11: Generate interesting challenges (each challenge may have just one solution)
-    // Fields we need
+
+    // Fields we need:
     private static final int BOARD_X = 0;  // horizontal distance from board to left boundary
     private static final int BOARD_Y = 0;  // vertical distance from board to top boundary
     private static final int PIECE_WIDTH = 0;  // piece width in GUI
