@@ -20,7 +20,7 @@ public class Piece {
      * @param: the orientation and position that want the piece put into.
      * @return void.
      */
-    public void ChangeDirandPos(String PieceStatement){ }
+    public void changeDirAndPos(String pieceStatement){ }
     public char getPieceName(){
         return pieceName;
     }
@@ -31,7 +31,7 @@ public class Piece {
 
     /**
      * Calculate the Boolean table according to the orientation
-     * and the Spotsposition array of the piece
+     * and the spotsPosition array of the piece
      * The method includes rotation and translation of the
      * array’s valu
      *
@@ -39,7 +39,7 @@ public class Piece {
      * @return A 4*4 boolean array that describe the piece
      * in the current orientation.
      */
-    public boolean[][] GetCurrentPos(){
+    public boolean[][] getCurrentPos(){
         return Spotsposition;
     }
 
@@ -53,18 +53,18 @@ public class Piece {
      * @return the answer.
      */
 
-    public boolean IsPiecetaken(String CurrentOnboard){
+    public boolean isPieceTaken(String currentOnBoard){
         return true;
     }
 
 
     /**
-     * Transfer a piece's statment to String such as b73E
+     * Transfer a piece's statement to String such as b73E
      *
      * @param: null.
      * @return the 4 char String that include position, name and orientation.
      */
-    public String PiecetoString(){return null;}
+    public String pieceToString(){return null;}
 
 
 }
