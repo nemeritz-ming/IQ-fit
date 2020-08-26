@@ -6,11 +6,11 @@ package comp1110.ass2;
 
 public class Piece {
     private final char pieceName = 0;
-    public final boolean spotsPosition[][] = new boolean[4][4];
+    public final boolean Spotsposition[][] = new boolean[4][4];
     private Direction orientation = Direction.NORTH;//Default orientation is North
     private int LeftPos = -1, UpperPos = -1; //This field record theUpLeft position of the piece if it has been put on the board, otherwise it will be -1
 
-    public Piece(char pieceName, boolean  spotsPosition[][]){
+    public Piece(char pieceName, boolean  Spotsposition[][]){
 
     }
     /**
@@ -20,7 +20,7 @@ public class Piece {
      * @param: the orientation and position that want the piece put into.
      * @return void.
      */
-    public void changeDirAndPos(String pieceStatement){ }
+    public void ChangeDirandPos(String PieceStatement){ }
     public char getPieceName(){
         return pieceName;
     }
@@ -31,7 +31,7 @@ public class Piece {
 
     /**
      * Calculate the Boolean table according to the orientation
-     * and the spotsPosition array of the piece
+     * and the Spotsposition array of the piece
      * The method includes rotation and translation of the
      * array’s valu
      *
@@ -39,8 +39,8 @@ public class Piece {
      * @return A 4*4 boolean array that describe the piece
      * in the current orientation.
      */
-    public boolean[][] getCurrentPos(){
-        return spotsPosition;
+    public boolean[][] GetCurrentPos(){
+        return Spotsposition;
     }
 
 
@@ -53,18 +53,18 @@ public class Piece {
      * @return the answer.
      */
 
-    public boolean isPieceTaken(String currentOnBoard){
+    public boolean IsPiecetaken(String CurrentOnboard){
         return true;
     }
 
 
     /**
-     * Transfer a piece's statement to String such as b73E
+     * Transfer a piece's statment to String such as b73E
      *
      * @param: null.
      * @return the 4 char String that include position, name and orientation.
      */
-    public String pieceToString(){return null;}
+    public String PiecetoString(){return null;}
 
 
 }

@@ -14,7 +14,7 @@ import java.util.Set;
  * (https://www.smartgames.eu/uk/one-player-games/iq-fit)
  */
 public class FitGame {
-    public boolean Board[][] = new boolean[5][10];
+    public int[][] Board = {{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
 
     /**
      * Add a new piece on the board, this will include checking
@@ -137,6 +137,21 @@ public class FitGame {
      * @return True if the placement sequence is valid
      */
     public static boolean isPlacementValid(String placement) {
+//        if (!isPlacementWellFormed(placement)) {return false;}
+//        int Numofpiece = placement.length()/4;
+//        for (int i=0; i< Numofpiece;i++){
+//            String PiecePlacement = placement.substring(i,i+4);
+//            Piece NewPiece = new Piece(PiecePlacement);
+//            int [][] matrix = NewPiece.Tomatirx();
+//            int Topx = NewPiece.getTopleftx();
+//            int Topy = NewPiece.getToplefty();
+//            for (int j=Topx; j<Topx+4;j++){
+//                for (int k=Topy;j<Topy+4;k++){
+//                    if()
+//                }
+//            }
+//        }
+
         return false; // FIXME Task 5: determine whether a placement string is valid
     }
 
