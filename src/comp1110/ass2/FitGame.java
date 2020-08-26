@@ -1,10 +1,11 @@
 package comp1110.ass2;
 
+import comp1110.ass2.gui.Board;
+
+import javax.management.openmbean.TabularDataSupport;
 import javax.swing.*;
 import java.util.HashSet;
 import java.util.Set;
-
-
 
 
 /**
@@ -14,7 +15,21 @@ import java.util.Set;
  * (https://www.smartgames.eu/uk/one-player-games/iq-fit)
  */
 public class FitGame {
-    public int[][] Board = {{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
+    public static int[][] Board = {{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
+
+    /**
+     * Create a new Piece according to the string that describe the piece
+     *
+     * @param: the String that describe piece
+     *
+     * @return The piece in type Piece
+     */
+    public static Piece createNewPiece(String thisPiece){
+        if (isPiecePlacementWellFormed(thisPiece))
+            return new Piece(thisPiece);
+        else
+            return null;
+    }
 
     /**
      * Add a new piece on the board, this will include checking
@@ -26,8 +41,19 @@ public class FitGame {
      * @return The new string, it will not change if the placement
      *           is not viable.
      */
-    public String addToBoard(String currentString, Piece pieceName){
-        return null;
+    public static String addToBoard(String currentString, String thisPiece){
+        Piece temp = createNewPiece(thisPiece);
+        int[][] tempMat = temp.toMatrix();
+        //int[][] tempMat =  {{1,1,1,1},{1,0,0,0},{0,0,0,0},{0,0,0,0}};
+        int tempX = temp.getTopLeftX();//thisPiece.charAt(1) - 48;
+        int tempY = temp.getTopLeftY();//thisPiece.charAt(2) - 48;
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                if (tempMat[j][i] == 1)
+                    Board[j + tempY][i + tempX] = 1;
+            }
+        }
+        return currentString + thisPiece;
     }
 
     /**
@@ -41,7 +67,7 @@ public class FitGame {
      *           is not viable.
      */
 
-    public String moveFromBoard(String currentString, Piece pieceName){
+    public String moveFromBoard(String currentString, String thisPiece){
         return null;
     }
 
@@ -52,7 +78,41 @@ public class FitGame {
      *          board
      * @return void
      */
-    public void StringToBoard(String currentString, Piece pieceName){}
+    public void StringToBoard(String currentString){}
+
+    /**
+     * Check if this piece is conflict with other piece on board
+     *
+     * @param: the String that describe the piece
+     *
+     * @return The piece in type Piece
+     */
+    public static boolean canPieceBePlaced(String thisPiece){
+        if (!isPiecePlacementWellFormed(thisPiece))
+            return false;
+        Piece temp = createNewPiece(thisPiece);
+        int[][] tempMat = temp.toMatrix();
+        //int[][] tempMat =  {{1,1,1,1},{1,0,0,0},{0,0,0,0},{0,0,0,0}};
+        int tempX = temp.getTopLeftX();//thisPiece.charAt(1) - 48;
+        int tempY = temp.getTopLeftY();//thisPiece.charAt(2) - 48;
+        //System.out.println("xy is :" +(tempX) +" "+ (tempY));
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                if (tempMat[j][i] == 1){
+                    //System.out.println((tempX + i) +" "+ (tempY + j));
+                    if (tempX + i > 9 || tempY + j > 4)
+                        return false;
+                    else{
+                        if (Board[j + tempY][i + tempX] == 1)
+                            return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+
 
 
     /**
@@ -137,22 +197,24 @@ public class FitGame {
      * @return True if the placement sequence is valid
      */
     public static boolean isPlacementValid(String placement) {
-//        if (!isPlacementWellFormed(placement)) {return false;}
-//        int Numofpiece = placement.length()/4;
-//        for (int i=0; i< Numofpiece;i++){
-//            String PiecePlacement = placement.substring(i,i+4);
-//            Piece NewPiece = new Piece(PiecePlacement);
-//            int [][] matrix = NewPiece.Tomatirx();
-//            int Topx = NewPiece.getTopleftx();
-//            int Topy = NewPiece.getToplefty();
-//            for (int j=Topx; j<Topx+4;j++){
-//                for (int k=Topy;j<Topy+4;k++){
-//                    if()
-//                }
-//            }
-//        }
+        for(int i=0; i<10; i++)
+        {
+            for(int j=0; j<5; j++)
+                Board[j][i] = 0;
 
-        return false; // FIXME Task 5: determine whether a placement string is valid
+        }
+        if (!isPlacementWellFormed(placement))
+            return false;
+        String tempString="";
+        for (int i = 0; i < placement.length()/4; i++){
+            String stringForThisPiece = placement.substring(i * 4, i * 4 + 4);
+            if (canPieceBePlaced(stringForThisPiece)){
+                addToBoard(tempString, stringForThisPiece);
+            }
+            else
+                return false;
+        }
+        return true; // FIXME Task 5: determine whether a placement string is valid
     }
 
     /**
