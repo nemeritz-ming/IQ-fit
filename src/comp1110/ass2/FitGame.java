@@ -41,7 +41,7 @@ public class FitGame {
      * @return The new string, it will not change if the placement
      *           is not viable.
      */
-    public static String addToBoard(String currentString, String thisPiece){
+    public static void addToBoard(String currentString, String thisPiece){
         Piece temp = createNewPiece(thisPiece);
         int[][] tempMat = temp.toMatrix();
         //int[][] tempMat =  {{1,1,1,1},{1,0,0,0},{0,0,0,0},{0,0,0,0}};
@@ -53,7 +53,7 @@ public class FitGame {
                     Board[j + tempY][i + tempX] = 1;
             }
         }
-        return currentString + thisPiece;
+        return; //currentString + thisPiece;
     }
 
     /**
@@ -112,6 +112,21 @@ public class FitGame {
         return true;
     }
 
+    public static void main(String[] args) {
+        String a = "B03SG70Si52SL00Nn01Eo63Sp20Er41WS40Ny62N";
+        System.out.println(a.length()/4);
+        for (int i = 0; i < a.length()/4; i++){
+            String stringForThisPiece = a.substring(i * 4, i * 4 + 4);
+            if (canPieceBePlaced(stringForThisPiece)){
+                addToBoard("", stringForThisPiece);
+            }
+            else
+                System.out.println("No");
+            for (int l = 0 ; l<5; l++)
+                System.out.println(Board[l][0]+" "+Board[l][1]+" "+Board[l][2]+" "+Board[l][3]+" "+Board[l][4]+" "+Board[l][5]+" "+Board[l][6]+" "+Board[l][7]+" "+Board[l][8]+" "+Board[l][9]);
+        }
+        System.out.println("yes");
+    }
 
     /**
      * Determine whether a piece placement is well-formed according to the
@@ -195,22 +210,35 @@ public class FitGame {
      * @return True if the placement sequence is valid
      */
     public static boolean isPlacementValid(String placement) {
-        for(int i=0; i<10; i++)
-        {
-            for(int j=0; j<5; j++)
-                Board[j][i] = 0;
-
-        }
+        int[][] tempBoard = {{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
         if (!isPlacementWellFormed(placement))
             return false;
-        String tempString="";
-        for (int i = 0; i < placement.length()/4; i++){
-            String stringForThisPiece = placement.substring(i * 4, i * 4 + 4);
-            if (canPieceBePlaced(stringForThisPiece)){
-                addToBoard(tempString, stringForThisPiece);
-            }
-            else
+        for (int n = 0; n < placement.length()/4; n++){
+            String stringForThisPiece = placement.substring(n * 4, n * 4 + 4);
+            if (!isPiecePlacementWellFormed(stringForThisPiece))
                 return false;
+            Piece temp = createNewPiece(stringForThisPiece);
+            int[][] tempMat = temp.toMatrix();
+            int tempX = temp.getTopLeftX();
+            int tempY = temp.getTopLeftY();
+            for (int i = 0; i < 4; i++){
+                for (int j = 0; j < 4; j++){
+                    if (tempMat[j][i] == 1){
+                        if (tempX + i > 9 || tempY + j > 4)
+                            return false;
+                        else{
+                            if (tempBoard[j + tempY][i + tempX] == 1)
+                                return false;
+                        }
+                    }
+                }
+            }
+            for (int i = 0; i < 4; i++){
+                for (int j = 0; j < 4; j++){
+                    if (tempMat[j][i] == 1)
+                        tempBoard[j + tempY][i + tempX] = 1;
+                }
+            }
         }
         return true; // FIXME Task 5: determine whether a placement string is valid
     }
