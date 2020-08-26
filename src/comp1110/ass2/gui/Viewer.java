@@ -1,6 +1,6 @@
 package comp1110.ass2.gui;
 
-import com.sun.glass.ui.View;
+
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -16,8 +16,6 @@ import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -55,7 +53,6 @@ public class Viewer extends Application {
         char rotate = placement.charAt(3);
         int x = Character.getNumericValue(placement.charAt(1));
         int y = Character.getNumericValue(placement.charAt(2));
-        int rotatetimes;
         String type;
         if (Character.isLowerCase(color)){ type = String.valueOf(color).toUpperCase()+"1";}
         else{type = String.valueOf(color).toUpperCase()+"2";}
