@@ -9,11 +9,11 @@ Everyone: create application skeleton - meeting 18:00 20 Aug
 
 ## Week 5
 
-Ming Lei: 
+Ming Lei: TASK 4
 
-Xinyi Jiang: 
+Xinyi Jiang: TASK 5
 
-Duo Liu:
+Duo Liu: TASK 5
 
 ## Week 6
 
