@@ -189,8 +189,7 @@ public class FitGame {
                         return false;
                 }
             }
-            temp = placement.substring(i*4, i*4 +4);
-            if (!isPiecePlacementWellFormed(temp))
+            if (!isPiecePlacementWellFormed(placement.substring(i*4, i*4 +4)))
                 return false;
         }
         return true; // FIXME Task 3: determine whether a placement is well-formed
