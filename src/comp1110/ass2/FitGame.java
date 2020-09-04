@@ -115,30 +115,6 @@ public class FitGame {
     }
 
     public static void main(String[] args) {
-        Board = new int[][] {{0,0,0,1,1,1,1,0,1,0},{0,0,1,0,0,1,0,0,1,0},{0,1,1,0,1,0,0,1,1,0},{1,1,0,0,1,0,1,0,1,0},{0,1,0,0,0,0,0,0,0,1},{0,0,1,1,0,1,1,0,0,0},{0,0,1,1,0,0,0,0,0,0},{0,0,1,1,0,0,1,1,0,0},{0,0,0,0,0,0,1,1,1,0},{0,0,0,0,0,1,0,1,0,0}};
-        for (int l = 0 ; l<5; l++)
-                System.out.println(Board[l][0]+" "+Board[l][1]+" "+Board[l][2]+" "+Board[l][3]+" "+Board[l][4]+" "+Board[l][5]+" "+Board[l][6]+" "+Board[l][7]+" "+Board[l][8]+" "+Board[l][9]);
-        System.out.println(Arrays.toString(getNextPos()));
-//        String a = "B03SG70Si52SL00Nn01Eo63Sp20Er41WS40Ny62N";
-//        System.out.println(a.length()/4);
-//        for (int i = 0; i < a.length()/4; i++){
-//            String stringForThisPiece = a.substring(i * 4, i * 4 + 4);
-//            if (canPieceBePlaced(stringForThisPiece)){
-//                addToBoard(stringForThisPiece);
-//            }
-//            else
-//                System.out.println("No");
-//            for (int l = 0 ; l<5; l++)
-//                System.out.println(Board[l][0]+" "+Board[l][1]+" "+Board[l][2]+" "+Board[l][3]+" "+Board[l][4]+" "+Board[l][5]+" "+Board[l][6]+" "+Board[l][7]+" "+Board[l][8]+" "+Board[l][9]);
-//        }
-//        System.out.println("yes");
-//        String b = "n11Sp13SS53S,B20EG00Ni40Sl82Wn02No80Ep50NR42NS43Sy03S";
-//        System.out.println(sortAdd(b,"p20E"));
-//        System.out.println(getViablePiecePlacements(b,8,3));
-//        for (int l = 0 ; l<5; l++)
-//            System.out.println(Board[l][0]+" "+Board[l][1]+" "+Board[l][2]+" "+Board[l][3]+" "+Board[l][4]+" "+Board[l][5]+" "+Board[l][6]+" "+Board[l][7]+" "+Board[l][8]+" "+Board[l][9]);
-//        System.out.println(canPieceBePlaced("g60N"));
-//        System.out.println(isPlacementWellFormed("B00WG70Ni43Sl73Sn03So10Ep31WR61SS30Ny52S，b81EI21Es53S"));
         System.out.println(getSolution("b33Sp30S"));
     }
 
@@ -327,9 +303,8 @@ public class FitGame {
         return solution;
         // FIXME Task 9: determine the solution to the game, given a particular challenge
     }
-
+    //    DFS searching
     public static void dfs(String challenge){
-        System.out.println(challenge);
         if(challenge !=null){
             if (challenge.length()==40){
                 if(checkCompletion()){
@@ -365,50 +340,8 @@ public class FitGame {
         }
     }
 
+    //     find the next position to place pieces
     public static int[] getNextPos(){
-//        int ans = -1;
-//        int[][] res = new int[][]{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
-//        for (int i=1; i<9;i++){
-//            for (int j=1; j<4;j++){
-//                if (Board[j][i]==0){
-//                    if(Board[j][i+1]==1){res[j][i]+=1;}
-//                    else if(Board[j][i-1]==1){res[j][i]+=1;}
-//                    else if(Board[j+1][i]==1){res[j][i]+=1;}
-//                    else if(Board[j-1][i]==1){res[j][i]+=1;}
-//                }
-//            }
-//        }
-//        for (int i=1; i<9;i++){
-//            if (Board[0][i]==0){if (Board[0][i+1]==1){res[0][i]+=1;} else if(Board[0][i-1]==1){res[0][i]+=1;}}
-//            if (Board[4][i]==0){if (Board[4][i+1]==1){res[4][i]+=1;} else if(Board[4][i-1]==1){res[4][i]+=1;}}
-//        }
-//        for (int i=1; i<4;i++){
-//            if (Board[i][0]==0){if (Board[i+1][0]==1){res[i][0]+=1;}else if(Board[i-1][0]==1){res[i][0]+=1;}}
-//            if (Board[i][9]==0){if (Board[i+1][9]==1){res[i][9]+=1;}else if(Board[i-1][9]==1){res[i][9]+=1;}}
-//        }
-//        if (Board[0][0]==0){if(Board[0][1]==1 || Board[1][0]==1){res[0][0]+=1;}}
-//        if (Board[4][0]==0){if(Board[3][0]==1 || Board[4][1]==1){res[4][0]+=1;}}
-//        if (Board[0][9]==0){if(Board[1][9]==1 || Board[0][8]==1){res[0][9]+=1;}}
-//        if (Board[4][9]==0){if(Board[3][9]==1 || Board[4][8]==1){res[4][9]+=1;}}
-//        for (int i = 0; i<10;i++){
-//            for (int j = 0; j<5; j++){
-//                if (res[j][i] > ans) {ans = res[j][i];}
-//            }
-//        }
-//        for (int i = 0; i<10;i++){
-//            for (int j = 0; j<5; j++){
-//                if (res[j][i] == ans) { return new int[]{j,i};}
-//            }
-//        }
-
-//        for (int i=0; i<10;i++){
-//            for (int j=0;j<4;j++){
-//                if(Board[j][i]==0 && Board[j+1][i]==1){
-//                    return new int[]{j,i};
-//                }
-//            }
-//        }
-
         for (int i=0; i<10;i++){
             for (int j=0;j<5;j++){
                 if(Board[j][i]==0){
@@ -416,17 +349,9 @@ public class FitGame {
                 }
             }
         }
-
-
-//        for (int i=9; i>-1;i--){
-//            for (int j=4;j>-1;j--){
-//                if(Board[j][i]==0){
-//                    return new int[]{j,i};
-//                }
-//            }
-//        }
         return null;
     }
+    //    add piece string to the board string
     public static String sortAdd(String a, String Piece){
         String res = "";
         ArrayList<String> B = new ArrayList<>();
@@ -440,6 +365,7 @@ public class FitGame {
         }
         return res;
     }
+    //    delete piece string from the board string
     public static String sortDelete(String a, String Piece){
         StringBuilder A = new StringBuilder(a);
         for (int i = 0; i < a.length()/4; i++){
@@ -449,6 +375,7 @@ public class FitGame {
         }
         return null;
     }
+    //    stop searching if impossible cases happen (i.e. a blank is surrounded by pieces)
     public static boolean helper(){
 //        check corner
         if(Board[0][0]==0 && Board[0][1] == 1 && Board[1][0]==1){return false;}
@@ -458,14 +385,6 @@ public class FitGame {
 
 
 //        check center with 1 blank
-        for(int i=1;i<4;i++){
-            for(int j=1;j<9;j++){
-                if(Board[i][j]==0 && Board[i][j+1] == 1 && Board[i+1][j]==1 && Board[i-1][j] == 1 && Board[i][j-1]==1){
-                    return false;
-                }
-            }
-        }
-//        check center with 2 blanks
         for(int i=1;i<4;i++){
             for(int j=1;j<9;j++){
                 if(Board[i][j]==0 && Board[i][j+1] == 1 && Board[i+1][j]==1 && Board[i-1][j] == 1 && Board[i][j-1]==1){
