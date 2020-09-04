@@ -1,11 +1,6 @@
 package comp1110.ass2;
 
-import comp1110.ass2.gui.Board;
-
-import javax.management.openmbean.TabularDataSupport;
-import javax.swing.*;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 
 /**
@@ -14,9 +9,15 @@ import java.util.Set;
  * The game is based directly on Smart Games' IQ-Fit game
  * (https://www.smartgames.eu/uk/one-player-games/iq-fit)
  */
+
 public class FitGame {
     public static int[][] Board = {{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
-
+    public static String solution = "";
+    public static int tlx = -1;
+    public static int tly = -1;
+    public static void initial(){
+        Board =new int[][] {{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
+    }
     /**
      * Create a new Piece according to the string that describe the piece
      *
@@ -24,6 +25,17 @@ public class FitGame {
      *
      * @return The piece in type Piece
      */
+
+    public static boolean checkCompletion(){
+        for (int i =0;i<5;i++){
+            for(int j=0;j<10;j++){
+                if (Board[i][j]!=1){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     public static Piece createNewPiece(String thisPiece){
         if (isPiecePlacementWellFormed(thisPiece))
             return new Piece(thisPiece);
@@ -41,44 +53,31 @@ public class FitGame {
      * @return The new string, it will not change if the placement
      *           is not viable.
      */
-    public static void addToBoard(String currentString, String thisPiece){
+    public static void addToBoard(String thisPiece){
         Piece temp = createNewPiece(thisPiece);
         int[][] tempMat = temp.toMatrix();
-        //int[][] tempMat =  {{1,1,1,1},{1,0,0,0},{0,0,0,0},{0,0,0,0}};
-        int tempX = temp.getTopLeftX();//thisPiece.charAt(1) - 48;
-        int tempY = temp.getTopLeftY();//thisPiece.charAt(2) - 48;
+        int tempX = temp.getTopLeftX();
+        int tempY = temp.getTopLeftY();
         for (int i = 0; i < 4; i++){
             for (int j = 0; j < 4; j++){
                 if (tempMat[j][i] == 1)
                     Board[j + tempY][i + tempX] = 1;
             }
         }
-        return; //currentString + thisPiece;
     }
+    public static void deleteFromBoard(String thisPiece){
+        Piece temp = createNewPiece(thisPiece);
+        int[][] tempMat = temp.toMatrix();
 
-    /**
-     * Move a piece from the board, this will include surch
-     * the piece from String. If find the piece, the method will update
-     * the board[][] as well as update the string
-     *
-     * @param: the current String that describe piece on the
-     *          board, the piece that want to move away
-     * @return The new string, it will not change if the placement
-     *           is not viable.
-     */
-
-    public String moveFromBoard(String currentString, String thisPiece){
-        return null;
+        int tempX = temp.getTopLeftX();
+        int tempY = temp.getTopLeftY();
+        for (int i = 0; i < 4; i++){
+            for (int j = 0; j < 4; j++){
+                if (tempMat[j][i] == 1)
+                    Board[j + tempY][i + tempX] = 0;
+            }
+        }
     }
-
-    /**
-     * Read the current string and update the board
-     * This method is prepared for initialize the game
-     * @param: the current String that describe piece on the
-     *          board
-     * @return void
-     */
-    public void StringToBoard(String currentString){}
 
     /**
      * Check if this piece is conflict with other piece on board
@@ -92,14 +91,11 @@ public class FitGame {
             return false;
         Piece temp = createNewPiece(thisPiece);
         int[][] tempMat = temp.toMatrix();
-        //int[][] tempMat =  {{1,1,1,1},{1,0,0,0},{0,0,0,0},{0,0,0,0}};
-        int tempX = temp.getTopLeftX();//thisPiece.charAt(1) - 48;
-        int tempY = temp.getTopLeftY();//thisPiece.charAt(2) - 48;
-        //System.out.println("xy is :" +(tempX) +" "+ (tempY));
+        int tempX = temp.getTopLeftX();
+        int tempY = temp.getTopLeftY();
         for (int i = 0; i < 4; i++){
             for (int j = 0; j < 4; j++){
                 if (tempMat[j][i] == 1){
-                    //System.out.println((tempX + i) +" "+ (tempY + j));
                     if (tempX + i > 9 || tempY + j > 4)
                         return false;
                     else{
@@ -113,19 +109,31 @@ public class FitGame {
     }
 
     public static void main(String[] args) {
-        String a = "B03SG70Si52SL00Nn01Eo63Sp20Er41WS40Ny62N";
-        System.out.println(a.length()/4);
-        for (int i = 0; i < a.length()/4; i++){
-            String stringForThisPiece = a.substring(i * 4, i * 4 + 4);
-            if (canPieceBePlaced(stringForThisPiece)){
-                addToBoard("", stringForThisPiece);
-            }
-            else
-                System.out.println("No");
-            for (int l = 0 ; l<5; l++)
+        Board = new int[][] {{0,0,0,1,1,1,1,0,1,0},{0,0,1,0,0,1,0,0,1,0},{0,1,1,0,1,0,0,1,1,0},{1,1,0,0,1,0,1,0,1,0},{0,1,0,0,0,0,0,0,0,1},{0,0,1,1,0,1,1,0,0,0},{0,0,1,1,0,0,0,0,0,0},{0,0,1,1,0,0,1,1,0,0},{0,0,0,0,0,0,1,1,1,0},{0,0,0,0,0,1,0,1,0,0}};
+        for (int l = 0 ; l<5; l++)
                 System.out.println(Board[l][0]+" "+Board[l][1]+" "+Board[l][2]+" "+Board[l][3]+" "+Board[l][4]+" "+Board[l][5]+" "+Board[l][6]+" "+Board[l][7]+" "+Board[l][8]+" "+Board[l][9]);
-        }
-        System.out.println("yes");
+        System.out.println(Arrays.toString(getNextPos()));
+//        String a = "B03SG70Si52SL00Nn01Eo63Sp20Er41WS40Ny62N";
+//        System.out.println(a.length()/4);
+//        for (int i = 0; i < a.length()/4; i++){
+//            String stringForThisPiece = a.substring(i * 4, i * 4 + 4);
+//            if (canPieceBePlaced(stringForThisPiece)){
+//                addToBoard(stringForThisPiece);
+//            }
+//            else
+//                System.out.println("No");
+//            for (int l = 0 ; l<5; l++)
+//                System.out.println(Board[l][0]+" "+Board[l][1]+" "+Board[l][2]+" "+Board[l][3]+" "+Board[l][4]+" "+Board[l][5]+" "+Board[l][6]+" "+Board[l][7]+" "+Board[l][8]+" "+Board[l][9]);
+//        }
+//        System.out.println("yes");
+//        String b = "n11Sp13SS53S,B20EG00Ni40Sl82Wn02No80Ep50NR42NS43Sy03S";
+//        System.out.println(sortAdd(b,"p20E"));
+//        System.out.println(getViablePiecePlacements(b,8,3));
+//        for (int l = 0 ; l<5; l++)
+//            System.out.println(Board[l][0]+" "+Board[l][1]+" "+Board[l][2]+" "+Board[l][3]+" "+Board[l][4]+" "+Board[l][5]+" "+Board[l][6]+" "+Board[l][7]+" "+Board[l][8]+" "+Board[l][9]);
+//        System.out.println(canPieceBePlaced("g60N"));
+//        System.out.println(isPlacementWellFormed("B00WG70Ni43Sl73Sn03So10Ep31WR61SS30Ny52S，b81EI21Es53S"));
+        System.out.println(getSolution("b33Sp30S"));
     }
 
     /**
@@ -167,7 +175,7 @@ public class FitGame {
      * @return True if the placement is well-formed
      */
     public static boolean isPlacementWellFormed(String placement) {
-        if (placement.length()%4 != 0 || placement.length()==0){
+        if (placement.length() % 4 != 0|| placement.equals("")){
             return false;
         }
         int N = placement.length() / 4;
@@ -209,7 +217,8 @@ public class FitGame {
      * @return True if the placement sequence is valid
      */
     public static boolean isPlacementValid(String placement) {
-        int[][] tempBoard = {{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
+        initial();
+        int[][] tempBoard = Board;
         if (!isPlacementWellFormed(placement))
             return false;
         for (int n = 0; n < placement.length()/4; n++){
@@ -260,7 +269,49 @@ public class FitGame {
      * @return A set of all viable piece placements, or null if there are none.
      */
     static Set<String> getViablePiecePlacements(String placement, int col, int row) {
-        return null; // FIXME Task 6: determine the set of all viable piece placements given existing placements
+        if (!placement.equals("")){if(! isPlacementValid(placement)){return null;}}
+        initial();
+        for (int i = 0; i < placement.length()/4; i++){
+            String stringForThisPiece = placement.substring(i * 4, i * 4 + 4);
+            if (canPieceBePlaced(stringForThisPiece)){
+                addToBoard(stringForThisPiece);
+            }
+        }
+        if (Board[row][col]==1){return null;}
+        Set<String> box =new HashSet<>();
+        String[] direct = {"N","E","S","W"};
+        String[] T = {"B","R","G","I","L","N","O","P","S","Y","b","r","g","i","l","n","o","p","s","y"};
+        List<String> A = Arrays.asList(T);
+        ArrayList<String> allType = new ArrayList<String>(A);
+        for (int i = 0; i < placement.length()/4; i++){
+            String low = Character.toString(Character.toLowerCase(placement.charAt(i * 4)));
+            String up =  Character.toString(Character.toUpperCase(placement.charAt(i * 4)));
+            if (allType.contains(low)||allType.contains(up)){
+                allType.remove(low);
+                allType.remove(up);
+            }
+        }
+        ArrayList<String> position = new ArrayList<>();
+        for (int i=Math.max(0,col-3); i<=col;i++){
+            for (int j=Math.max(0,row-3); j<=row;j++){
+                position.add(Integer.toString(i) +Integer.toString(j));
+            }
+        }
+        for(String i: direct){
+            for(String j: allType){
+                for (String posString: position){
+                    if (canPieceBePlaced(j+posString+i)){
+                        addToBoard(j+posString+i);
+                        if(Board[row][col]==1){
+                            box.add(j+posString+i);
+                        }
+                        deleteFromBoard(j+posString+i);
+                    }
+                }
+            }
+        }
+        if (box.size() !=0){return box;}
+        else{return null;} // FIXME Task 6: determine the set of all viable piece placements given existing placements
     }
 
     /**
@@ -271,22 +322,170 @@ public class FitGame {
      * the challenge.
      */
     public static String getSolution(String challenge) {
-        return null;  // FIXME Task 9: determine the solution to the game, given a particular challenge
+        solution = "";
+        dfs(challenge);
+        return solution;
+        // FIXME Task 9: determine the solution to the game, given a particular challenge
     }
-    /**
-     * Solution design
-     *
-     * Given the current placement
-     * getTopLeftCorner method is to find the the most top left position which is not placed on any pieces.
-     *
-     * @param placement A starting placement string
-     * @return A length 2 integer array represents the non-zero top left position
-     * return the position if the Top left position exists and it is not placed on any piece
-     * or return null if there is no such a position
-     */
-    public static int[] getTopLeftcorner(String placement){
+
+    public static void dfs(String challenge){
+        System.out.println(challenge);
+        if(challenge !=null){
+            if (challenge.length()==40){
+                if(checkCompletion()){
+                    solution = challenge ;
+                    return;
+                }
+            }
+            Board = new int[][]{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+            for (int i = 0; i < challenge.length()/4; i++){
+                String stringForThisPiece = challenge.substring(i * 4, i * 4 + 4);
+                if (canPieceBePlaced(stringForThisPiece)){
+                    addToBoard(stringForThisPiece);
+                }
+            }
+            if (helper()) {
+                Set<String> box;
+                if (getNextPos() != null) {
+                    tlx = getNextPos()[0];
+                    tly = getNextPos()[1];
+                    box = getViablePiecePlacements(challenge, tly, tlx);
+                    if (box != null) {
+                        for (String k : box) {
+                            addToBoard(k);
+                            challenge = sortAdd(challenge, k);
+                            dfs(challenge);
+                            if (!solution.equals("")){return;}
+                            challenge = sortDelete(challenge, k);
+                            deleteFromBoard(k);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static int[] getNextPos(){
+//        int ans = -1;
+//        int[][] res = new int[][]{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+//        for (int i=1; i<9;i++){
+//            for (int j=1; j<4;j++){
+//                if (Board[j][i]==0){
+//                    if(Board[j][i+1]==1){res[j][i]+=1;}
+//                    else if(Board[j][i-1]==1){res[j][i]+=1;}
+//                    else if(Board[j+1][i]==1){res[j][i]+=1;}
+//                    else if(Board[j-1][i]==1){res[j][i]+=1;}
+//                }
+//            }
+//        }
+//        for (int i=1; i<9;i++){
+//            if (Board[0][i]==0){if (Board[0][i+1]==1){res[0][i]+=1;} else if(Board[0][i-1]==1){res[0][i]+=1;}}
+//            if (Board[4][i]==0){if (Board[4][i+1]==1){res[4][i]+=1;} else if(Board[4][i-1]==1){res[4][i]+=1;}}
+//        }
+//        for (int i=1; i<4;i++){
+//            if (Board[i][0]==0){if (Board[i+1][0]==1){res[i][0]+=1;}else if(Board[i-1][0]==1){res[i][0]+=1;}}
+//            if (Board[i][9]==0){if (Board[i+1][9]==1){res[i][9]+=1;}else if(Board[i-1][9]==1){res[i][9]+=1;}}
+//        }
+//        if (Board[0][0]==0){if(Board[0][1]==1 || Board[1][0]==1){res[0][0]+=1;}}
+//        if (Board[4][0]==0){if(Board[3][0]==1 || Board[4][1]==1){res[4][0]+=1;}}
+//        if (Board[0][9]==0){if(Board[1][9]==1 || Board[0][8]==1){res[0][9]+=1;}}
+//        if (Board[4][9]==0){if(Board[3][9]==1 || Board[4][8]==1){res[4][9]+=1;}}
+//        for (int i = 0; i<10;i++){
+//            for (int j = 0; j<5; j++){
+//                if (res[j][i] > ans) {ans = res[j][i];}
+//            }
+//        }
+//        for (int i = 0; i<10;i++){
+//            for (int j = 0; j<5; j++){
+//                if (res[j][i] == ans) { return new int[]{j,i};}
+//            }
+//        }
+
+//        for (int i=0; i<10;i++){
+//            for (int j=0;j<4;j++){
+//                if(Board[j][i]==0 && Board[j+1][i]==1){
+//                    return new int[]{j,i};
+//                }
+//            }
+//        }
+
+        for (int i=0; i<10;i++){
+            for (int j=0;j<5;j++){
+                if(Board[j][i]==0){
+                    return new int[]{j,i};
+                }
+            }
+        }
+
+
+//        for (int i=9; i>-1;i--){
+//            for (int j=4;j>-1;j--){
+//                if(Board[j][i]==0){
+//                    return new int[]{j,i};
+//                }
+//            }
+//        }
         return null;
     }
+    public static String sortAdd(String a, String Piece){
+        String res = "";
+        ArrayList<String> B = new ArrayList<>();
+        for (int i = 0; i < a.length()/4; i++){
+            B.add(a.substring(i * 4, i * 4 + 4));
+        }
+        B.add(Piece);
+        Collections.sort(B,String.CASE_INSENSITIVE_ORDER);
+        for (String k: B){
+            res += k;
+        }
+        return res;
+    }
+    public static String sortDelete(String a, String Piece){
+        StringBuilder A = new StringBuilder(a);
+        for (int i = 0; i < a.length()/4; i++){
+            if (a.substring(i * 4, i * 4 + 4).equals(Piece)){
+                return a.substring(0,4*i)+a.substring(4*i+4,a.length());
+            }
+        }
+        return null;
+    }
+    public static boolean helper(){
+//        check corner
+        if(Board[0][0]==0 && Board[0][1] == 1 && Board[1][0]==1){return false;}
+        if(Board[4][0]==0 && Board[3][0] == 1 && Board[4][1]==1){return false;}
+        if(Board[0][9]==0 && Board[1][9] == 1 && Board[0][8]==1){return false;}
+        if(Board[4][9]==0 && Board[3][9] == 1 && Board[4][8]==1){return false;}
+
+
+//        check center with 1 blank
+        for(int i=1;i<4;i++){
+            for(int j=1;j<9;j++){
+                if(Board[i][j]==0 && Board[i][j+1] == 1 && Board[i+1][j]==1 && Board[i-1][j] == 1 && Board[i][j-1]==1){
+                    return false;
+                }
+            }
+        }
+//        check center with 2 blanks
+        for(int i=1;i<4;i++){
+            for(int j=1;j<9;j++){
+                if(Board[i][j]==0 && Board[i][j+1] == 1 && Board[i+1][j]==1 && Board[i-1][j] == 1 && Board[i][j-1]==1){
+                    return false;
+                }
+            }
+        }
+
+//        check edge
+        for (int i=1;i<4;i++){
+            if (Board[i][0]==0 && Board[i-1][0]==1 && Board[i+1][0]==1 && Board[i][1]==1){return false;}
+            if (Board[i][9]==0 && Board[i-1][9]==1 && Board[i+1][9]==1 && Board[i][8]==1){return false;}
+        }
+        for (int j=1;j<9;j++){
+            if (Board[0][j]==0 && Board[0][j+1]==1 && Board[0][j-1]==1 && Board[1][j]==1){return false;}
+            if (Board[4][j]==0 && Board[4][j+1]==1 && Board[4][j-1]==1 && Board[3][j]==1){return false;}
+        }
+        return true;
+    }
+
     /** we are going to use DFS to solve this puzzle
      * String DFS(String challenge){}
      * Given a string challenge, we first convert it into a board matrix (5*10)

@@ -44,7 +44,6 @@ public class Viewer extends Application {
      * Draw a placement in the window, removing any previously drawn one
      *
      * @param placement A valid placement string
-     *
      */
     void makePlacement(String placement){
         root.getChildren().clear();
