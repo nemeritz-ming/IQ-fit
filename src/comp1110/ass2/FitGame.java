@@ -58,8 +58,10 @@ public class FitGame {
         int[][] tempMat = temp.toMatrix();
         int tempX = temp.getTopLeftX();
         int tempY = temp.getTopLeftY();
-        for (int i = 0; i < 4; i++){
-            for (int j = 0; j < 4; j++){
+        int rows = tempMat.length;
+        int columns = tempMat[0].length;
+        for (int i = 0; i < columns; i++){
+            for (int j = 0; j < rows; j++){
                 if (tempMat[j][i] == 1)
                     Board[j + tempY][i + tempX] = 1;
             }
@@ -71,8 +73,10 @@ public class FitGame {
 
         int tempX = temp.getTopLeftX();
         int tempY = temp.getTopLeftY();
-        for (int i = 0; i < 4; i++){
-            for (int j = 0; j < 4; j++){
+        int rows = tempMat.length;
+        int columns = tempMat[0].length;
+        for (int i = 0; i < columns; i++){
+            for (int j = 0; j < rows; j++){
                 if (tempMat[j][i] == 1)
                     Board[j + tempY][i + tempX] = 0;
             }
@@ -93,8 +97,10 @@ public class FitGame {
         int[][] tempMat = temp.toMatrix();
         int tempX = temp.getTopLeftX();
         int tempY = temp.getTopLeftY();
-        for (int i = 0; i < 4; i++){
-            for (int j = 0; j < 4; j++){
+        int rows = tempMat.length;//行数
+        int columns = tempMat[0].length;//列数
+        for (int i = 0; i < columns; i++){
+            for (int j = 0; j < rows; j++){
                 if (tempMat[j][i] == 1){
                     if (tempX + i > 9 || tempY + j > 4)
                         return false;
@@ -217,20 +223,20 @@ public class FitGame {
      * @return True if the placement sequence is valid
      */
     public static boolean isPlacementValid(String placement) {
-        initial();
-        int[][] tempBoard = Board;
         if (!isPlacementWellFormed(placement))
             return false;
+        initial();
+        int[][] tempBoard = Board;
         for (int n = 0; n < placement.length()/4; n++){
             String stringForThisPiece = placement.substring(n * 4, n * 4 + 4);
-            if (!isPiecePlacementWellFormed(stringForThisPiece))
-                return false;
             Piece temp = createNewPiece(stringForThisPiece);
             int[][] tempMat = temp.toMatrix();
             int tempX = temp.getTopLeftX();
             int tempY = temp.getTopLeftY();
-            for (int i = 0; i < 4; i++){
-                for (int j = 0; j < 4; j++){
+            int rows = tempMat.length;//行数
+            int columns = tempMat[0].length;//列数
+            for (int i = 0; i < columns; i++){
+                for (int j = 0; j < rows; j++){
                     if (tempMat[j][i] == 1){
                         if (tempX + i > 9 || tempY + j > 4)
                             return false;
@@ -238,17 +244,11 @@ public class FitGame {
                             if (tempBoard[j + tempY][i + tempX] == 1)
                                 return false;
                         }
+                        tempBoard[j + tempY][i + tempX] = 1;
                     }
                 }
             }
-            for (int i = 0; i < 4; i++){
-                for (int j = 0; j < 4; j++){
-                    if (tempMat[j][i] == 1)
-                        tempBoard[j + tempY][i + tempX] = 1;
-                }
-            }
         }
-
         return true; // FIXME Task 5: determine whether a placement string is valid
     }
 
