@@ -114,10 +114,6 @@ public class Piece {
     public int getTopLeftY(){
         return topLeftY;
     }
-    public String getTypeName(){
-        return typeName;
-    }
-
 }
 
 
