@@ -1,6 +1,6 @@
 # New Code for Deliverable D2D
 
-## < uid > < name >
+## < u6891814 > < Xinyi Jiang >
 
 For Deliverable D2D, I contributed the following new statements of original code:
 
