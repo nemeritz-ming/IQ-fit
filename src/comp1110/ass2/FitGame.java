@@ -401,9 +401,6 @@ public class FitGame {
         return true;
     }
 
-    public static void main(String[] args) {
-        System.out.println(isPlacementValid("B00Sb50N"));
-    }
 
     /** we are going to use DFS to solve this puzzle
      * String DFS(String challenge){}
