@@ -114,9 +114,6 @@ public class FitGame {
         return true;
     }
 
-    public static void main(String[] args) {
-        System.out.println(getSolution("b33Sp30S"));
-    }
 
     /**
      * Determine whether a piece placement is well-formed according to the
@@ -161,7 +158,6 @@ public class FitGame {
             return false;
         }
         int N = placement.length() / 4;
-        String temp;
         for (int i = 0; i < N; i++){
             for (int j = i + 1; j < N; j++){
                 if (placement.charAt(i*4) == placement.charAt(j*4))
@@ -403,6 +399,10 @@ public class FitGame {
             if (Board[4][j]==0 && Board[4][j+1]==1 && Board[4][j-1]==1 && Board[3][j]==1){return false;}
         }
         return true;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(isPlacementValid("B00Sb50N"));
     }
 
     /** we are going to use DFS to solve this puzzle
