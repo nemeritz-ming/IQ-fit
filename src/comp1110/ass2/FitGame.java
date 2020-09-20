@@ -283,8 +283,8 @@ public class FitGame {
             }
         }
         if (box.size() !=0){return box;}
-        else{return null;} // FIXME Task 6: determine the set of all viable piece placements given existing placements
-    }
+        else{return null;}
+    }// FIXME Task 6: determine the set of all viable piece placements given existing placements
 
     /**
      * Return the solution to a particular challenge.
