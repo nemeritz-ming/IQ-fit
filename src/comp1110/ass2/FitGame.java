@@ -114,6 +114,32 @@ public class FitGame {
         return true;
     }
 
+    /**
+     * check if the piece (or its brother) has been used
+     *
+     * @param placement A string describing a placement of one or more pieces
+     * @return True if all pieces are not used.
+     */
+    public static boolean hasPiecesbeenused(String placement){
+        if(!isPlacementWellFormed(placement))
+            return false;
+        char[] T = {'B','R','G','I','L','N','O','P','S','Y'};
+        boolean[] check = new boolean[10];
+        String temp = placement.toUpperCase();
+        for (int i = 0; i < placement.length(); i += 4){
+            System.out.println(temp.charAt(i));
+            for (int j = 0; j < 10; j++){
+                if(T[j] == temp.charAt(i)){
+                    if (check[j])
+                        return false;
+                    else
+                        check[j] = true;
+                }
+            }
+        }
+        return true;
+    }
+
 
     /**
      * Determine whether a piece placement is well-formed according to the
