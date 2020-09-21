@@ -15,16 +15,15 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import javafx.scene.transform.Rotate;
 import javafx.scene.transform.Translate;
 import javafx.stage.Stage;
 
-import java.awt.event.MouseEvent;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
-
-import comp1110.ass2.FitGame;
 
 public class Board extends Application {
 
@@ -44,13 +43,13 @@ public class Board extends Application {
     private static final int VIEWER_HEIGHT= 700;
     private static final int BOARD_X = 50;  // horizontal distance from board to left boundary
     private static final int BOARD_Y = 150;  // vertical distance from board to top boundary
-    private static final int PIECE_WIDTH = 0;  // piece width in GUI
-    private static final int PIECE_HEIGHT = 0;  // piece height in GUI
+    private static final int PIECE_WIDTH = 51;  // piece width in GUI
+    private static final int PIECE_HEIGHT = 51;  // piece height in GUI
     private static final int SELECT_X = 700;  // X coordinate of the SELECT Menu
     private static final int SELECT_Y = 50;  // y coordinate of the SELECT Menu
-    private static final int SELECT_WIDTH = 0;  // width of the SELECT Menu
-    private static final int SELECT_HEIGHT = 0;  // height of the SELECT Menu
-    private static final int GAME_WIDTH = 0;  // width of the game
+    private static final int SELECT_WIDTH = 180;  // width of the SELECT Menu
+    private static final int SELECT_HEIGHT = 500;  // height of the SELECT Menu
+    private static final int SELECT_GAP = 10;  // GAP of the SELECT Menu
     private static final int GAME_HEIGHT = 0;  // height of the game
 
     private final Group root = new Group();
@@ -66,10 +65,11 @@ public class Board extends Application {
     private static final String URI_BASE = "assets/";
     private static final String BASEBOARD_URI = Board.class.getResource(URI_BASE + "board.png").toString();
     // the difficulty slider
-     private Slider difficulty = new Slider();
+    private final Slider difficulty = new Slider();
     // message on completion
-     private Text completionText;
-     private static String tempGame;
+    private Text completionText = new Text("Well done!");
+    private static String tempGame;
+    private static String Game;
 
     // this class is to represent the piece graphically
     static class GUIPiece extends ImageView {
@@ -86,37 +86,11 @@ public class Board extends Application {
                 throw new IllegalArgumentException("Bad piece: \"" + piece + "\"");
             }
             this.PieceID= piece;
-            setFitHeight(PIECE_WIDTH);
+            setFitHeight(PIECE_HEIGHT);
             setFitWidth(PIECE_WIDTH);
         } // like GUIPiece("N2")
     }
 
-    // This class extends piece with the capacity for it to be dragged and dropped, and snap-to-grid.
-    static class DraggablePiece extends GUIPiece{
-        double homeX, homeY; // the original position of the dragged piece, should be in the 		// select menu
-        double mouseX, mouseY; // the last known mouse positions when dragging
-        int orientation;  // 0 - 3 used to change the orientation of given piece.
-        boolean canMove;  // check if the piece can be dragged onto the board
-
-        private void canMoveToBoard(String pieceID){} // return true if the piece is movable i.e. if it can be put on the board
-        // DraggablePiece method convert piece from its board position numbers to GUI position 	also, using event handlers to move the piece
-        public DraggablePiece(String placement){}  // like DraggablePiece("b23S")
-        // Snap the tile to an appropriate position on the board or a nearest appropriate position
-        // if mouseX, mouseY are not on the board.
-        private void snapToBoard() {}
-        // Snap the tile back to its original position in Select menu
-        private void snapToHome() {}
-        // Convert from x and y coordinates in GUI to a position on the board. It should be a int
-        // tuple like (2, 1) which presents the entry of the board matrix.
-        private void getPieceOnBoardPosition(double x, double y){}
-        private void setNewGameBoardPosition(){}         // Update the game state with this piece's position
-        private void checkCompletion(){}}        // Check game completion and update status
-
-
-    // Set up event handlers for the main game, create handlers for key press and release events
-    // like quit the game by pressing Q, Snap the last piece on the board to select menu by pressing B
-    private void setUpHandlers(Scene scene) {}
-    // Present the board in the board group
     private void makeBoard(){
         board.getChildren().clear();
         ImageView baseboard = new ImageView();
@@ -185,9 +159,9 @@ public class Board extends Application {
     private void makeSelect(){
         GridPane selectMenu = new GridPane();
         selectMenu.setPadding(new Insets(10,10,10,10));
-        selectMenu.setVgap(10);
-        selectMenu.setVgap(10);
-        selectMenu.setPrefSize(180, 500);
+        selectMenu.setVgap(SELECT_GAP);
+        selectMenu.setHgap(SELECT_GAP);
+        selectMenu.setPrefSize(SELECT_WIDTH, SELECT_HEIGHT);
         selectMenu.setLayoutX(SELECT_X);
         selectMenu.setLayoutY(SELECT_Y);
 
@@ -234,9 +208,11 @@ public class Board extends Application {
                 int rotate;
                 rotate = (int) imageView.getRotate()/90;
                 if(transfer(type1,rotate,event.getSceneX(),event.getSceneY())!=null) {
-                    if (canMove(transfer(type1, rotate, event.getSceneX(), event.getSceneY())) && FitGame.isPlacementValid(FitGame.sortAdd(tempGame, transfer(type1, rotate, event.getSceneX(), event.getSceneY())))) {
+                    if (canMove(transfer(type1, rotate, event.getSceneX(), event.getSceneY())) && FitGame.isPlacementValid(FitGame.sortAdd(tempGame, transfer(type1, rotate, event.getSceneX(), event.getSceneY())))
+                            && FitGame.havePiecesBeenUsed(FitGame.sortAdd(tempGame, transfer(type1, rotate, event.getSceneX(), event.getSceneY())))) {
                         tempGame = FitGame.sortAdd(tempGame, transfer(type1, rotate, event.getSceneX(), event.getSceneY()));
                             makePiece(tempGame);
+                            checkCompletionUi();
                         }
                     else{
                         makePiece(tempGame);
@@ -272,9 +248,11 @@ public class Board extends Application {
                 int rotate2;
                 rotate2 = (int) imageView2.getRotate()/90;
                 if(transfer(type2,rotate2,event.getSceneX(),event.getSceneY())!=null) {
-                    if (canMove(transfer(type2, rotate2, event.getSceneX(), event.getSceneY())) && FitGame.isPlacementValid(FitGame.sortAdd(tempGame, transfer(type2, rotate2, event.getSceneX(), event.getSceneY())))) {
+                    if (canMove(transfer(type2, rotate2, event.getSceneX(), event.getSceneY())) && FitGame.isPlacementValid(FitGame.sortAdd(tempGame, transfer(type2, rotate2, event.getSceneX(), event.getSceneY())))
+                            && FitGame.havePiecesBeenUsed(FitGame.sortAdd(tempGame, transfer(type2, rotate2, event.getSceneX(), event.getSceneY())))) {
                         tempGame = FitGame.sortAdd(tempGame, transfer(type2, rotate2, event.getSceneX(), event.getSceneY()));
                         makePiece(tempGame);
+                        checkCompletionUi();
                     }
                     else{
                         makePiece(tempGame);
@@ -322,7 +300,7 @@ public class Board extends Application {
         int row = (int) newX/51;
         int col = (int) newY/51;
         if (row < 10 && col < 5){
-            ans = T + String.valueOf(row)+ String.valueOf(col) + dir;
+            ans = T + row + col + dir;
             return ans;
         }
         else {return null;}
@@ -337,10 +315,6 @@ public class Board extends Application {
             return FitGame.canPieceBePlaced(pieceType);}
         return false;
     }
-
-    // Add the Games to the board
-    private void addGamesToBoard(){}
-    // Reset all of pieces to their initial state
 
     private void makeControls(){
         Button button = new Button("Restart");
@@ -387,18 +361,41 @@ public class Board extends Application {
         difficultyCaption.setLayoutY(VIEWER_HEIGHT - 170);
         controls.getChildren().add(difficultyCaption);
     }
-    // Create the massage when the player wins the game
-    private void completionMessage(){}
+    // make completion
+    private void makeCompletion(){
+        completionText.setFill(Color.BLACK);
+        completionText.setCache(true);
+        completionText.setFont(Font.font("Arial", FontWeight.EXTRA_BOLD, 80));
+        completionText.setLayoutX(170);
+        completionText.setLayoutY(100);
+        completionText.setTextAlignment(TextAlignment.CENTER);
+        root.getChildren().add(completionText);
+    }
+
+    private void checkCompletionUi(){
+        if(FitGame.checkCompletion()){
+            showCompletion();
+        }
+    }
     // Show the completion message
-    private void showCompletion(){}
+    private void showCompletion(){
+        completionText.toFront();
+        completionText.setOpacity(1);
+    }
     // Hide the completion message
-    private void hideCompletion(){}
+    private void hideCompletion(){
+        completionText.toBack();
+        completionText.setOpacity(0);
+    }
     // Start a new game, resetting everything as necessary
     private void newGame(){
         try {
+            hideCompletion();
             int diff = (int) difficulty.getValue() - 1;
-            tempGame = Games.SOLUTIONS[(int) (Math.random()*24+diff*24)].objective;
-            makePiece(tempGame);
+            Game = Games.SOLUTIONS[(int) (Math.random()*24+diff*24)].objective;
+            tempGame = Game;
+            makePiece(Game);
+            makeSelect();
         } catch (IllegalArgumentException e) {
             System.err.println("Uh oh. " + e);
             e.printStackTrace();
@@ -407,8 +404,11 @@ public class Board extends Application {
     }
     // Restart this game, creating a new game with the same initial state.
     private void restart(){
+        hideCompletion();
         pieces.getChildren().clear();
-        makePiece(tempGame);
+        tempGame = Game;
+        makePiece(Game);
+        makeSelect();
     }
 
     @Override
@@ -419,6 +419,8 @@ public class Board extends Application {
         root.getChildren().add(controls);
         root.getChildren().add(pieces);
         root.getChildren().add(selectM);
+        makeCompletion();
+        hideCompletion();
         makeSelect();
         makeBoard();
         makeControls();
