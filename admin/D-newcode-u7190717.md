@@ -4,7 +4,7 @@
 
 For Deliverable D2D, I contributed the following new statements of original code:
 
-- Added the [hasPiecesbeenused()](https://gitlab.cecs.anu.edu.au/comp1110/comp1110-ass2/-/blob/master/src/comp1110/ass2/FitGame.java#L123-141) function to FitGame class
+- Added the [havePiecesbeenused()](https://gitlab.cecs.anu.edu.au/comp1110/comp1110-ass2/-/blob/master/src/comp1110/ass2/FitGame.java#L123-141) function to FitGame class
 - Edited the [isPlacementValid()](https://gitlab.cecs.anu.edu.au/comp1110/comp1110-ass2/-/blob/master/src/comp1110/ass2/FitGame.java#L224-251) function to FitGame class
 
 

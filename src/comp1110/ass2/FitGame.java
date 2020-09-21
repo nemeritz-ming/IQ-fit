@@ -120,7 +120,7 @@ public class FitGame {
      * @param placement A string describing a placement of one or more pieces
      * @return True if all pieces are not used.
      */
-    public static boolean hasPiecesbeenused(String placement){
+    public static boolean havePiecesbeenused(String placement){
         if(!isPlacementWellFormed(placement))
             return false;
         char[] T = {'B','R','G','I','L','N','O','P','S','Y'};
