@@ -182,6 +182,9 @@ public class Board extends Application {
             ImageView newImage2 = new ImageView(input2);
             imageView2.setPreserveRatio(true);
             imageView2.setFitWidth(60);
+            Character[] arr1 = {'b','o','p','r','s','y'};
+            Set<Character> setFour = new HashSet<>(Arrays.asList(arr1));
+
             Button bt = new Button();
             bt.setGraphic(imageView);
             bt.setPrefWidth(60);
@@ -200,8 +203,18 @@ public class Board extends Application {
                 newImage.setPreserveRatio(true);
                 newImage.setFitHeight(102);
                 an.getChildren().add(newImage);
-                AnchorPane.setLeftAnchor(newImage, event.getSceneX()-21);
-                AnchorPane.setTopAnchor(newImage, event.getSceneY()-17);
+                if(setFour.contains(Character.toLowerCase(type1.charAt(0))) && ((int)imageView.getRotate() / 90) % 2 == 1 ){
+                    AnchorPane.setLeftAnchor(newImage, event.getSceneX()-80);
+                    AnchorPane.setTopAnchor(newImage, event.getSceneY()+25);
+                }
+                else if(!setFour.contains(Character.toLowerCase(type1.charAt(0))) && ((int)imageView.getRotate() / 90) % 2 == 1 ){
+                    AnchorPane.setLeftAnchor(newImage, event.getSceneX()-47);
+                    AnchorPane.setTopAnchor(newImage, event.getSceneY()+3);
+                }
+                else{
+                    AnchorPane.setLeftAnchor(newImage, event.getSceneX()-21);
+                    AnchorPane.setTopAnchor(newImage, event.getSceneY()-17);
+                }
                 pieces.getChildren().add(an);
             });
             bt.setOnMouseReleased(event -> {     // drag is complete
@@ -240,8 +253,18 @@ public class Board extends Application {
                 newImage2.setPreserveRatio(true);
                 newImage2.setFitHeight(102);
                 an2.getChildren().add(newImage2);
-                AnchorPane.setLeftAnchor(newImage2, event.getSceneX()-21);
-                AnchorPane.setTopAnchor(newImage2, event.getSceneY()-17);
+                if(setFour.contains(Character.toLowerCase(type2.charAt(0))) && ((int)imageView2.getRotate() / 90) % 2 == 1 ){
+                    AnchorPane.setLeftAnchor(newImage2, event.getSceneX()-80);
+                    AnchorPane.setTopAnchor(newImage2, event.getSceneY()+25);
+                }
+                else if(!setFour.contains(Character.toLowerCase(type2.charAt(0))) && ((int)imageView2.getRotate() / 90) % 2 == 1 ){
+                    AnchorPane.setLeftAnchor(newImage2, event.getSceneX()-47);
+                    AnchorPane.setTopAnchor(newImage2, event.getSceneY()+3);
+                }
+                else{
+                    AnchorPane.setLeftAnchor(newImage2, event.getSceneX()-21);
+                    AnchorPane.setTopAnchor(newImage2, event.getSceneY()-17);
+                }
                 pieces.getChildren().add(an2);
             });
             bt2.setOnMouseReleased(event -> {     // drag is complete

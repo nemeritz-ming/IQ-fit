@@ -127,7 +127,6 @@ public class FitGame {
         boolean[] check = new boolean[10];
         String temp = placement.toUpperCase();
         for (int i = 0; i < placement.length(); i += 4){
-            System.out.println(temp.charAt(i));
             for (int j = 0; j < 10; j++){
                 if(T[j] == temp.charAt(i)){
                     if (check[j])
