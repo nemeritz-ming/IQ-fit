@@ -97,8 +97,8 @@ public class FitGame {
         int[][] tempMat = temp.toMatrix();
         int tempX = temp.getTopLeftX();
         int tempY = temp.getTopLeftY();
-        int rows = tempMat.length;//行数
-        int columns = tempMat[0].length;//列数
+        int rows = tempMat.length;
+        int columns = tempMat[0].length;
         for (int i = 0; i < columns; i++){
             for (int j = 0; j < rows; j++){
                 if (tempMat[j][i] == 1){
@@ -230,8 +230,8 @@ public class FitGame {
             int[][] tempMat = temp.toMatrix();
             int tempX = temp.getTopLeftX();
             int tempY = temp.getTopLeftY();
-            int rows = tempMat.length;//行数
-            int columns = tempMat[0].length;//列数
+            int rows = tempMat.length;
+            int columns = tempMat[0].length;
             for (int i = 0; i < columns; i++){
                 for (int j = 0; j < rows; j++){
                     if (tempMat[j][i] == 1){
@@ -448,4 +448,39 @@ public class FitGame {
      * also delete it from the hashset
      * end the for loop
      */
+
+    /**
+     * This method compares the current string of all the pieces on the board with the final answer.
+     * and it will return a string that represent all the pieces that haven't been correctly put.
+     * The method is meanly used to show the Hint window while playing
+     **
+     * @param currentString The current pieces statement on the board.
+     * @param gameNum The iNum of the current game.
+     *
+     * @return A string that represents all the pieces that haven't been correctly placed.
+     *         eg: String "BNiEoW" means that B/i/o haven't been well placed,
+     *         and they should in direction North/East/West.
+     */
+    public static String findWrongPieces(String currentString, int gameNum){
+        String pieceList = "";
+        String ans = Games.SOLUTIONS[gameNum].placement;
+        int piecesNumber = currentString.length() / 4;
+        int checkPoint = 0;
+        for (int i = 0; i < piecesNumber; i++){
+            String realPiece = currentString.substring(i*4, i*4 + 4);
+            for (int j = checkPoint; j < 10; j++){
+                String correctPiece = ans.substring(j*4, j*4 + 4);
+                System.out.println(realPiece +" vs "+correctPiece);
+                if (correctPiece.toUpperCase().charAt(0) == realPiece.toUpperCase().charAt(0)){
+                    checkPoint = j + 1;
+                    if (!correctPiece.equals(realPiece)){
+                        pieceList = pieceList + correctPiece.charAt(0) + correctPiece.charAt(3);
+                    }
+                    break;
+                }
+            }
+        }
+        return pieceList;
+    }
+
 }
