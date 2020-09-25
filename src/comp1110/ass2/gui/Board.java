@@ -217,6 +217,7 @@ public class Board extends Application {
                 }
                 pieces.getChildren().add(an);
             });
+
             bt.setOnMouseReleased(event -> {     // drag is complete
                 int rotate;
                 rotate = (int) imageView.getRotate()/90;
