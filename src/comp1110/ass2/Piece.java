@@ -16,6 +16,8 @@ public class Piece {
         this.topLeftY = Character.getNumericValue(piecePlacement.charAt(2));
         this.typeName = piecePlacement.charAt(0) + String.valueOf(piecePlacement.charAt(3));
     }
+
+
     public int[][] toMatrix(){
         Map<String, int[][]> map = new HashMap<>();
         map.put("bN",new int[][] {{1,1,1,1},{1,0,0,0}});
