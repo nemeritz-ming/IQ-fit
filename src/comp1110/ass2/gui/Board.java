@@ -155,6 +155,7 @@ public class Board extends Application {
             pieces.getChildren().add(imagePiece);
         }
     }
+
     // Put possible pieces on the select menu based on the string of initialState
     private void makeSelect(){
         GridPane selectMenu = new GridPane();
