@@ -220,7 +220,7 @@ public class Board extends Application {
 
             bt.setOnMouseReleased(event -> {     // drag is complete
                 int rotate;
-                rotate = (int) imageView.getRotate()/90;
+                rotate = (int) newImage.getRotate()/90 % 4;
                 if(transfer(type1,rotate,event.getSceneX(),event.getSceneY())!=null) {
                     if (canMove(transfer(type1, rotate, event.getSceneX(), event.getSceneY())) && FitGame.isPlacementValid(FitGame.sortAdd(tempGame, transfer(type1, rotate, event.getSceneX(), event.getSceneY())))
                             && FitGame.havePiecesBeenUsed(FitGame.sortAdd(tempGame, transfer(type1, rotate, event.getSceneX(), event.getSceneY())))) {
@@ -270,7 +270,7 @@ public class Board extends Application {
             });
             bt2.setOnMouseReleased(event -> {     // drag is complete
                 int rotate2;
-                rotate2 = (int) imageView2.getRotate()/90;
+                rotate2 = (int) imageView2.getRotate()/90 % 4;
                 if(transfer(type2,rotate2,event.getSceneX(),event.getSceneY())!=null) {
                     if (canMove(transfer(type2, rotate2, event.getSceneX(), event.getSceneY())) && FitGame.isPlacementValid(FitGame.sortAdd(tempGame, transfer(type2, rotate2, event.getSceneX(), event.getSceneY())))
                             && FitGame.havePiecesBeenUsed(FitGame.sortAdd(tempGame, transfer(type2, rotate2, event.getSceneX(), event.getSceneY())))) {
