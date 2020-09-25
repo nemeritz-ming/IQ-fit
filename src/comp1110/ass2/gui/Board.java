@@ -4,14 +4,13 @@ import comp1110.ass2.FitGame;
 import comp1110.ass2.Games;
 import javafx.application.Application;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -44,17 +43,14 @@ public class Board extends Application {
     private static final int BOARD_X = 50;  // horizontal distance from board to left boundary
     private static final int BOARD_Y = 150;  // vertical distance from board to top boundary
     private static final int PIECE_WIDTH = 51;  // piece width in GUI
-    private static final int PIECE_HEIGHT = 51;  // piece height in GUI
     private static final int SELECT_X = 700;  // X coordinate of the SELECT Menu
     private static final int SELECT_Y = 50;  // y coordinate of the SELECT Menu
     private static final int SELECT_WIDTH = 180;  // width of the SELECT Menu
     private static final int SELECT_HEIGHT = 500;  // height of the SELECT Menu
     private static final int SELECT_GAP = 10;  // GAP of the SELECT Menu
-    private static final int GAME_HEIGHT = 0;  // height of the game
 
     private final Group root = new Group();
     private final Group pieces = new Group();
-    private final Group solution = new Group();
     private final Group controls = new Group();
     private final Group board = new Group();
     private final Group selectM = new Group();
@@ -67,29 +63,12 @@ public class Board extends Application {
     // the difficulty slider
     private final Slider difficulty = new Slider();
     // message on completion
-    private Text completionText = new Text("Well done!");
+    private final Text completionText = new Text("Well done!");
     private static String tempGame;
+    private static String GameSolution;
     private static String Game;
 
-    // this class is to represent the piece graphically
-    static class GUIPiece extends ImageView {
-        // fields
-        String PieceID;
 
-        // Construct a particular playing Piece, and set the size of the piece
-        public void GUIPiece(String piece) {
-            Set<String> TypeBox = new HashSet<>();
-            String[] T = {"B","G","I","L","N","O","P","R","S","Y"};
-            List<String> A = Arrays.asList(T);
-            ArrayList<String> allType = new ArrayList<String>(A);
-            if (!allType.contains(String.valueOf(piece.charAt(0))) || !(piece.charAt(1) =='1') || !(piece.charAt(1) =='2')){
-                throw new IllegalArgumentException("Bad piece: \"" + piece + "\"");
-            }
-            this.PieceID= piece;
-            setFitHeight(PIECE_HEIGHT);
-            setFitWidth(PIECE_WIDTH);
-        } // like GUIPiece("N2")
-    }
 
     private void makeBoard(){
         board.getChildren().clear();
@@ -126,8 +105,8 @@ public class Board extends Application {
                 imagePiece.setFitHeight(102);
                 imagePiece.setFitWidth(153);
             }
-            imagePiece.setX(90+x*51);
-            imagePiece.setY(165+y*51);
+            imagePiece.setX(90+x*PIECE_WIDTH);
+            imagePiece.setY(165+y*PIECE_WIDTH);
             Rotate rot = new Rotate();
             Translate translate = new Translate();
             if (rotate == 'E'){
@@ -154,6 +133,25 @@ public class Board extends Application {
             }
             pieces.getChildren().add(imagePiece);
         }
+
+    }
+    private void delete(){
+        pieces.setOnMouseClicked(e -> {
+            if (e.getButton() == MouseButton.PRIMARY){
+                double posX = e.getX() - 90;
+                double posY = e.getY() - 165;
+                if( posX / PIECE_WIDTH < 10 && posY / PIECE_WIDTH < 5){
+                    String a = FitGame.findPieceSpotOnBoard(tempGame,(int) posY / PIECE_WIDTH,(int) posX / PIECE_WIDTH);
+                    if( a != null ){
+                        if(!Game.contains(a)){
+                            tempGame = FitGame.sortDelete(tempGame, a);
+                            assert tempGame != null;
+                            makePiece(tempGame);
+                        }
+                    }
+                }
+            }
+        });
     }
 
     // Put possible pieces on the select menu based on the string of initialState
@@ -166,10 +164,9 @@ public class Board extends Application {
         selectMenu.setLayoutX(SELECT_X);
         selectMenu.setLayoutY(SELECT_Y);
 
-        Set<String> TypeBox2 = new HashSet<>();
         String[] T = {"B","G","I","L","N","O","P","R","S","Y"};
         List<String> A = Arrays.asList(T);
-        ArrayList<String> allType = new ArrayList<String>(A);
+        ArrayList<String> allType = new ArrayList<>(A);
         for(int j=0; j < allType.size();j++){
             String type1 = allType.get(j)+"1";
             Image input = new Image(Board.class.getResource(URI_BASE + type1 + ".png").toString());
@@ -183,6 +180,7 @@ public class Board extends Application {
             ImageView newImage2 = new ImageView(input2);
             imageView2.setPreserveRatio(true);
             imageView2.setFitWidth(60);
+
             Character[] arr1 = {'b','o','p','r','s','y'};
             Set<Character> setFour = new HashSet<>(Arrays.asList(arr1));
 
@@ -191,12 +189,9 @@ public class Board extends Application {
             bt.setPrefWidth(60);
             bt.setMinHeight(60);
             bt.setContentDisplay(ContentDisplay.CENTER);
-            bt.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent e) {
-                    imageView.setRotate(imageView.getRotate() + 90);
-                    bt.setGraphic(imageView);
-                }
+            bt.setOnAction(e -> {
+                imageView.setRotate(imageView.getRotate() + 90);
+                bt.setGraphic(imageView);
             });
             bt.setOnMouseDragged(event -> {
                 AnchorPane an = new AnchorPane();
@@ -242,12 +237,9 @@ public class Board extends Application {
             bt2.setGraphic(imageView2);
             bt2.setPrefWidth(60);
             bt2.setMinHeight(60);
-            bt2.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent e) {
-                    imageView2.setRotate(imageView2.getRotate() + 90);
-                    bt2.setGraphic(imageView2);
-                }
+            bt2.setOnAction(e -> {
+                imageView2.setRotate(imageView2.getRotate() + 90);
+                bt2.setGraphic(imageView2);
             });
             bt2.setOnMouseDragged(event -> {
                 AnchorPane an2 = new AnchorPane();
@@ -299,7 +291,7 @@ public class Board extends Application {
         selectM.getChildren().add(sp);
     }
     public static String transfer(String Type, int rotate, double getX, double getY){
-        String ans = "";
+        String ans;
         String dir,T;
         switch (rotate){
             case 0:
@@ -347,23 +339,13 @@ public class Board extends Application {
         button.setLayoutY(VIEWER_HEIGHT - 175);
         button.setPrefHeight(30);
         button.setPrefWidth(150);
-        button.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                restart();
-            }
-        });
+        button.setOnAction(e -> restart());
         Button button2 = new Button("New Game");
         button2.setLayoutX(BOARD_X + 200);
         button2.setLayoutY(VIEWER_HEIGHT - 175);
         button2.setPrefHeight(30);
         button2.setPrefWidth(150);
-        button2.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent e) {
-                newGame();
-            }
-        });
+        button2.setOnAction(e -> newGame());
         controls.getChildren().add(button);
         controls.getChildren().add(button2);
 
@@ -417,8 +399,10 @@ public class Board extends Application {
         try {
             hideCompletion();
             int diff = (int) difficulty.getValue() - 1;
-            Game = Games.SOLUTIONS[(int) (Math.random()*24+diff*24)].objective;
+            int num = (int) (Math.random()*24+diff*24);
+            Game = Games.SOLUTIONS[num].objective;
             tempGame = Game;
+            GameSolution = Games.SOLUTIONS[num].placement;
             makePiece(Game);
             makeSelect();
         } catch (IllegalArgumentException e) {
@@ -437,9 +421,62 @@ public class Board extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         primaryStage.setTitle("IQ-Fit");
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
+        scene.setOnKeyTyped(keyEvent -> {
+            if (keyEvent.getCharacter().equals("/")){
+                String HintString = FitGame.findWrongPieces(tempGame, GameSolution);
+                double width = 600;
+                double height = 115;
+                GridPane HintPane = new GridPane();
+                HintPane.setPadding(new Insets(30,20,20,20));
+                HintPane.setPrefSize(width, height);
+                HintPane.setVgap(40);
+                HintPane.setHgap(20);
+                int s = HintString.length() / 2;
+                for (int i=0; i<s; ++i){
+                    String PiecePlacement = HintString.substring(2*i,2*(i+1));
+                    char color = PiecePlacement.charAt(0);
+                    char rotate = PiecePlacement.charAt(1);
+                    String type;
+                    if (Character.isLowerCase(color)){ type = String.valueOf(color).toUpperCase()+"1";}
+                    else{type = String.valueOf(color).toUpperCase()+"2";}
+                    Image image = new Image(Board.class.getResource(URI_BASE + type + ".png").toString());
+                    ImageView imagePiece = new ImageView(image);
+                    imagePiece.setPreserveRatio(true);
+                    imagePiece.setFitHeight(45);
+                    switch (rotate){
+                        case 'N':
+                            imagePiece.setRotate(0);
+                            break;
+                        case 'E':
+                            imagePiece.setRotate(90);
+                            break;
+                        case 'S':
+                            imagePiece.setRotate(180);
+                            break;
+                        default:
+                            imagePiece.setRotate(270);
+                            break;
+                    }
+                    if (i < 5){
+                        HintPane.add(imagePiece,i, 0);}
+                    else{
+                        height = 230;
+                        HintPane.setPrefSize(width, height);
+                        HintPane.add(imagePiece,i-5, 1);}
+                }
+                Scene secondScene = new Scene(HintPane,width , height);
+                // New window (Stage)
+                Stage newWindow = new Stage();
+                newWindow.setTitle("Hint !");
+                newWindow.setScene(secondScene);
+                newWindow.setX(540);
+                newWindow.setY(130);
+                newWindow.show();
+            }
+        });
         root.getChildren().add(board);
         root.getChildren().add(controls);
         root.getChildren().add(pieces);
@@ -449,10 +486,10 @@ public class Board extends Application {
         makeSelect();
         makeBoard();
         makeControls();
+        delete();
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-
 //    public static void main(String[] args) {
 //        System.out.println(transfer("B1", 0,230, 320));
 //    }

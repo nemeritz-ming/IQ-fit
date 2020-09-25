@@ -5,7 +5,7 @@ import java.util.*;
 public class Games {
   public int number;
   public String objective;
-  String placement;
+  public String placement;
   Set<String> placements;
 
   Games(int iNumber, String iObjective, String iPlacement) {

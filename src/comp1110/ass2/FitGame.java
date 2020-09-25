@@ -1,5 +1,7 @@
 package comp1110.ass2;
 
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
+
 import java.util.*;
 
 
@@ -455,16 +457,14 @@ public class FitGame {
      * The method is meanly used to show the Hint window while playing
      **
      * @param currentString The current pieces statement on the board.
-     * @param gameNum The iNum of the current game.
+     * @param ans The iNum of the current game.
      *
      * @return A string that represents all the pieces that haven't been correctly placed.
      *         eg: String "BNiEoW" means that B/i/o haven't been well placed,
      *         and they should in direction North/East/West.
      */
-    public static String findWrongPieces(String currentString, int gameNum) {
+    public static String findWrongPieces(String currentString, String ans) {
         String pieceList = "";
-        String ans = Games.SOLUTIONS[gameNum].placement;
-        System.out.println(ans);
         int piecesNumber = currentString.length() / 4;
         int checkPoint = 0;
         for (int i = 0; i < 10; i++){
@@ -490,22 +490,27 @@ public class FitGame {
     }
 
     public static String findPieceSpotOnBoard(String piecePlacement, int x, int y) {
-        Piece temp = createNewPiece(piecePlacement);
-        int[][] tempMat = temp.toMatrix();
-        int tempX = temp.getTopLeftX();
-        int tempY = temp.getTopLeftY();
-        int rows = tempMat.length;
-        int columns = tempMat[0].length;
-        for (int i = 0; i < columns; i++) {
-            for (int j = 0; j < rows; j++) {
-                if (j + tempY== x && i+tempX == y) {
-                    return piecePlacement;
+        int s = piecePlacement.length() / 4;
+        for(int k = 0; k <s; k++ ){
+            String realPiece = piecePlacement.substring(k*4, k*4 + 4);
+            Piece temp = createNewPiece(realPiece);
+            int[][] tempMat = temp.toMatrix();
+            int tempX = temp.getTopLeftX();
+            int tempY = temp.getTopLeftY();
+            int rows = tempMat.length;
+            int columns = tempMat[0].length;
+            for (int i = 0; i < columns; i++) {
+                for (int j = 0; j < rows; j++) {
+                    if (j + tempY== x && i + tempX == y && tempMat[j][i]==1) {
+                        return realPiece;
+                    }
                 }
             }
-
         }
         return null;
-
     }
 
+    public static void main(String[] args) {
+        System.out.println(findWrongPieces("B03SG70Si52SL00Nn01Er41WS40Ny62N","B03SG70Si52SL00Nn01Eo63Sp20Er41WS40Ny62N"));
+    }
 }
