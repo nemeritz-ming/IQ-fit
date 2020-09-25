@@ -470,7 +470,6 @@ public class FitGame {
             String realPiece = currentString.substring(i*4, i*4 + 4);
             for (int j = checkPoint; j < 10; j++){
                 String correctPiece = ans.substring(j*4, j*4 + 4);
-                System.out.println(realPiece +" vs "+correctPiece);
                 if (correctPiece.toUpperCase().charAt(0) == realPiece.toUpperCase().charAt(0)){
                     checkPoint = j + 1;
                     if (!correctPiece.equals(realPiece)){
