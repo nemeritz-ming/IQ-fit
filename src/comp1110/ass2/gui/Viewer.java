@@ -131,7 +131,7 @@ public class Viewer extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         primaryStage.setTitle("FitGame Viewer");
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
         root.getChildren().add(controls);
@@ -139,4 +139,5 @@ public class Viewer extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
+    //end of code
 }
