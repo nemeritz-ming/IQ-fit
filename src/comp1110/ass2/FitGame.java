@@ -461,26 +461,34 @@ public class FitGame {
      *         eg: String "BNiEoW" means that B/i/o haven't been well placed,
      *         and they should in direction North/East/West.
      */
-    public static String findWrongPieces(String currentString, int gameNum){
+    public static String findWrongPieces(String currentString, int gameNum) {
         String pieceList = "";
         String ans = Games.SOLUTIONS[gameNum].placement;
+        System.out.println(ans);
         int piecesNumber = currentString.length() / 4;
         int checkPoint = 0;
-        for (int i = 0; i < piecesNumber; i++){
-            String realPiece = currentString.substring(i*4, i*4 + 4);
-            for (int j = checkPoint; j < 10; j++){
-                String correctPiece = ans.substring(j*4, j*4 + 4);
-                if (correctPiece.toUpperCase().charAt(0) == realPiece.toUpperCase().charAt(0)){
-                    checkPoint = j + 1;
-                    if (!correctPiece.equals(realPiece)){
-                        pieceList = pieceList + correctPiece.charAt(0) + correctPiece.charAt(3);
-                    }
-                    break;
+        for (int i = 0; i < 10; i++){
+            String correctPiece = ans.substring(i*4, i*4 + 4);
+            String realPiece = currentString.substring(checkPoint*4, checkPoint*4 + 4);
+            if (correctPiece.toUpperCase().charAt(0) == realPiece.toUpperCase().charAt(0)){
+                checkPoint += 1;
+                if (!correctPiece.equals(realPiece)){
+                    pieceList = pieceList + correctPiece.charAt(0) + correctPiece.charAt(3);
                 }
+            }
+            else
+                pieceList = pieceList + correctPiece.charAt(0) + correctPiece.charAt(3);
+            if (checkPoint == piecesNumber){
+                for (int j = i + 1; j < 10; j++){
+                    correctPiece = ans.substring(j*4, j*4 + 4);
+                    pieceList = pieceList + correctPiece.charAt(0) + correctPiece.charAt(3);
+                }
+                break;
             }
         }
         return pieceList;
     }
+
     public static String findPieceSpotOnBoard(String piecePlacement, int x, int y) {
         Piece temp = createNewPiece(piecePlacement);
         int[][] tempMat = temp.toMatrix();
