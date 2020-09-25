@@ -481,5 +481,23 @@ public class FitGame {
         }
         return pieceList;
     }
+    public static String findPieceSpotOnBoard(String piecePlacement, int x, int y) {
+        Piece temp = createNewPiece(piecePlacement);
+        int[][] tempMat = temp.toMatrix();
+        int tempX = temp.getTopLeftX();
+        int tempY = temp.getTopLeftY();
+        int rows = tempMat.length;
+        int columns = tempMat[0].length;
+        for (int i = 0; i < columns; i++) {
+            for (int j = 0; j < rows; j++) {
+                if (j + tempY== x && i+tempX == y) {
+                    return piecePlacement;
+                }
+            }
+
+        }
+        return null;
+
+    }
 
 }
