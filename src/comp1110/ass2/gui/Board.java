@@ -290,9 +290,18 @@ public class Board extends Application {
         sp.setPrefSize(200,500);
         selectM.getChildren().add(sp);
     }
+//    transfer function
+//    given a piece's type such as "B1", a rotate index, and its position on the UI board like (231, 255)
+//    return its PiecePlacement in FitGame class like "B23S".
     public static String transfer(String Type, int rotate, double getX, double getY){
         String ans;
         String dir,T;
+        String[] Ty = {"B","G","I","L","N","O","P","R","S","Y"};
+        List<String> TypeBox = Arrays.asList(Ty);
+        if (! TypeBox.contains(String.valueOf(Character.toUpperCase(Type.charAt(0))))){
+            return null;
+        }
+        if(rotate >3 || rotate <0){return null;}
         switch (rotate){
             case 0:
                 dir = "N";
@@ -314,6 +323,7 @@ public class Board extends Application {
         }
         double newX = getX - 90;
         double newY = getY - 165;
+        if (newX < 0 || newY < 0){return null;}
         int row = (int) newX/51;
         int col = (int) newY/51;
         if (row < 10 && col < 5){
