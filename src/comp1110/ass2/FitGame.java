@@ -488,6 +488,21 @@ public class FitGame {
         return pieceList;
     }
 
+
+    /**
+     * Input the piecePlacement String on board
+     * First we will divide the String to each real piece String
+     * Second we will check each pieces' location on board
+     * Use toMatrix method to make each piece string to Matrix
+     * Then get each pieces specific spot location on board
+     * Finally return the piece string that appear on the specific spot
+
+      * @param piecePlacement The current pieces statement on the board
+     * @param x Columns on board
+     * @param y Rows on board
+     * @return The actual piece String that located on one spot on the board
+     */
+
     public static String findPieceSpotOnBoard(String piecePlacement, int x, int y) {
         int s = piecePlacement.length() / 4;
         for(int k = 0; k <s; k++ ){
