@@ -456,7 +456,7 @@ public class FitGame {
      * The method is meanly used to show the Hint window while playing
      **
      * @param currentString The current pieces statement on the board.
-     * @param ans The iNum of the current game.
+     * @param ans The final string of the current game.
      *
      * @return A string that represents all the pieces that haven't been correctly placed.
      *         eg: String "BNiEoW" means that B/i/o haven't been well placed,
@@ -465,6 +465,8 @@ public class FitGame {
     public static String findWrongPieces(String currentString, String ans) {
         String pieceList = "";
         int piecesNumber = currentString.length() / 4;
+        if (piecesNumber == 0)
+            currentString ="A000";
         int checkPoint = 0;
         for (int i = 0; i < 10; i++){
             String correctPiece = ans.substring(i*4, i*4 + 4);
@@ -524,7 +526,7 @@ public class FitGame {
         return null;
     }
 
-    public static void main(String[] args) {
-        System.out.println(findWrongPieces("B03SG70Si52SL00Nn01Er41WS40Ny62N","B03SG70Si52SL00Nn01Eo63Sp20Er41WS40Ny62N"));
-    }
+//    public static void main(String[] args) {
+//        System.out.println(findWrongPieces("B23Sg30Sp00NR01Ws50Ny61E","B23Sg30SI42Nl82WN12No80Ep00NR01Ws50Ny61E"));
+//    }
 }
