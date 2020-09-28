@@ -14,6 +14,7 @@ import java.util.*;
 public class FitGame {
     public static int[][] Board = {{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
     public static String solution = "";
+    public static List<String> solutionBox = new ArrayList<>();
     public static int tlx = -1;
     public static int tly = -1;
     public static void initial(){
@@ -525,8 +526,170 @@ public class FitGame {
         }
         return null;
     }
+    //    Task 11
+    //    DFS searching
+    public static void dfs2(String challenge){
+        if(challenge !=null){
+            if (challenge.length()==40){
+                if(checkCompletion()){
+                    solution = challenge ;
+                    solutionBox.add(solution);
+                    if (solutionBox.size() == 2){
+                        return;
+                    }
+                }
+            }
+            Board = new int[][]{{0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
+            for (int i = 0; i < challenge.length()/4; i++){
+                String stringForThisPiece = challenge.substring(i * 4, i * 4 + 4);
+                if (canPieceBePlaced(stringForThisPiece)){
+                    addToBoard(stringForThisPiece);
+                }
+            }
+            if (helper()) {
+                Set<String> box;
+                if (getNextPos() != null) {
+                    tlx = getNextPos()[0];
+                    tly = getNextPos()[1];
+                    box = getViablePiecePlacements(challenge, tly, tlx);
+                    if (box != null) {
+                        for (String k : box) {
+                            addToBoard(k);
+                            challenge = sortAdd(challenge, k);
+                            dfs2(challenge);
+                            if (solutionBox.size() == 2){
+                                return;
+                            }
+//                            if (!solution.equals("")){return;}
+                            challenge = sortDelete(challenge, k);
+                            deleteFromBoard(k);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    public static void GeneratePieces(){
+        solution = "";
+        solutionBox.clear();
+        String[] Ty = {"B","G","I","L","N","O","P","R","S","Y","b","g","i","l","n","o","p","r","s","y"};
+        String[] Rotate = {"N","S","W","E"};
+        int X = (int) (Math.random()*10);
+        int Y = (int) (Math.random()*5);
+        String T = Ty[(int) (Math.random()*Ty.length)];
+        String R = Rotate[(int) (Math.random()*Rotate.length)];
+        String RandomPiece = T + X + Y + R;
+        if(isPlacementWellFormed(RandomPiece)){
+            dfs(RandomPiece);
+            if (solution.equals("")){
+                GeneratePieces();
+            }
+        }else{
+            GeneratePieces();
+        }
+    }
+    public static String GenerateSolutions(int difficulty){
+        GeneratePieces();
+        switch (difficulty){
+            case 0:
+                String game0 = solution;
+                for (int i = 0; i<8;i++){
+                    for (int j = i+1; j<9; j++){
+                        for (int k = j+1; k<10; k++) {
+                            String a = game0.substring(i * 4, i * 4 + 4);
+                            String b = game0.substring(j * 4, j * 4 + 4);
+                            String c = game0.substring(k * 4, k * 4 + 4);
+                            game0 = game0.replaceAll(a,"");
+                            game0 = game0.replaceAll(b,"");
+                            game0 = game0.replaceAll(c,"");
+                            solution = "";
+                            solutionBox.clear();
+                            dfs2(game0);
+                            if (solutionBox.size() == 1) {
+                                return game0;
+                            }
+                        }
+                    }
+                }
+                return GenerateSolutions(0);
 
-//    public static void main(String[] args) {
-//        System.out.println(findWrongPieces("B23Sg30Sp00NR01Ws50Ny61E","B23Sg30SI42Nl82WN12No80Ep00NR01Ws50Ny61E"));
-//    }
+            case 1:
+                String game1 = solution;
+                for (int i = 0; i<6;i++){
+                    for (int j = i+1; j<7; j++){
+                        for (int k = j+1; k<8; k++) {
+                            for(int s = k+1; s<9; s++){
+                                for (int h = s+1; h<10; h++){
+                                    String correctPiece = game1.substring(i * 4, i * 4 + 4) + game1.substring(j * 4, j * 4 + 4) + game1.substring(k * 4, k * 4 + 4) + game1.substring(s * 4, s * 4 + 4) + game1.substring(h * 4, h * 4 + 4);
+                                    solution = "";
+                                    solutionBox.clear();
+                                    dfs2(correctPiece);
+                                    if (solutionBox.size() == 1) {
+                                        return correctPiece;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                return GenerateSolutions(1);
+
+            case 2:
+                String game2 = solution;
+                for (int i = 0; i<7;i++){
+                    for (int j = i+1; j<8; j++){
+                        for (int k = j+1; k<9; k++) {
+                            for(int s = k+1; s<10; s++){
+                                String correctPiece = game2.substring(i * 4, i * 4 + 4) + game2.substring(j * 4, j * 4 + 4) + game2.substring(k * 4, k * 4 + 4) + game2.substring(s * 4, s * 4 + 4);
+                                solution = "";
+                                solutionBox.clear();
+                                dfs2(correctPiece);
+                                if (solutionBox.size() == 1) {
+                                    return correctPiece;
+                                }
+                            }
+                        }
+                    }
+                }
+                return GenerateSolutions(2);
+
+            case 3:
+                String game3 = solution;
+                for (int i = 0; i<8;i++){
+                    for (int j = i+1; j<9; j++){
+                        for (int k = j+1; k<10; k++) {
+                            String correctPiece = game3.substring(i * 4, i * 4 + 4) + game3.substring(j * 4, j * 4 + 4) + game3.substring(k * 4, k * 4 + 4);
+                            solution = "";
+                            solutionBox.clear();
+                            dfs2(correctPiece);
+                            if (solutionBox.size() == 1) {
+                                return correctPiece;
+                            }
+                        }
+                    }
+                }
+                return GenerateSolutions(3);
+
+            default:
+                String game4 = solution;
+                for (int i = 0; i<9;i++){
+                    for (int j = i+1; j<10; j++){
+                        String correctPiece = game4.substring(i*4, i*4 + 4) + game4.substring(j*4, j*4 + 4);
+                        solution = "";
+                        solutionBox.clear();
+                        dfs2(correctPiece);
+                        if (solutionBox.size()==1){
+                            return correctPiece;
+                        }
+                    }
+                }
+                return GenerateSolutions(4);
+        }
+    }
+
+
+
+    public static void main(String[] args) {
+        System.out.println(GenerateSolutions(0));
+    }
 }
