@@ -1,6 +1,8 @@
 package comp1110.ass2;
 
 
+import jdk.jfr.StackTrace;
+
 import java.util.*;
 
 
@@ -10,7 +12,6 @@ import java.util.*;
  * The game is based directly on Smart Games' IQ-Fit game
  * (https://www.smartgames.eu/uk/one-player-games/iq-fit)
  */
-
 public class FitGame {
     public static int[][] Board = {{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
     public static String solution = "";
@@ -20,14 +21,12 @@ public class FitGame {
     public static void initial(){
         Board =new int[][] {{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
     }
-    /**
-     * Create a new Piece according to the string that describe the piece
-     *
-     * @param: the String that describe piece
-     *
-     * @return The piece in type Piece
-     */
 
+    /**
+     * Check if the game has ended
+     *
+     * @return A boolean value that tells if the game has ended
+     */
     public static boolean checkCompletion(){
         for (int i =0;i<5;i++){
             for(int j=0;j<10;j++){
@@ -38,6 +37,14 @@ public class FitGame {
         }
         return true;
     }
+
+    /**
+     * Given the four characters string of a piece. If such
+     * piece can be placed on the board, create the piece.
+     *
+     * @return A new piece type member if the piece can be placed. Return null if the
+     *         placement is illegal
+     */
     public static Piece createNewPiece(String thisPiece){
         if (isPiecePlacementWellFormed(thisPiece))
             return new Piece(thisPiece);
@@ -47,13 +54,11 @@ public class FitGame {
 
     /**
      * Add a new piece on the board, this will include checking
-     * if the placement viable. If so, the method will update
+     * if the placement is viable. If it is, the method will update
      * the board[][] as well as update the string
      *
-     * @param: the current String that describe piece on the
-     *          board, the piece that want to add
-     * @return The new string, it will not change if the placement
-     *           is not viable.
+     * @param A String that describe the piece that want to add
+     *         to the board
      */
     public static void addToBoard(String thisPiece){
         Piece temp = createNewPiece(thisPiece);
@@ -69,6 +74,15 @@ public class FitGame {
             }
         }
     }
+
+    /**
+     * Delete a piece from the board, this will include checking
+     * if the action is viable. If it is, the method will update
+     * the board[][] as well as update the string
+     *
+     * @param thisPiece A String that describe the piece that want to delete
+     *         from the board
+     */
     public static void deleteFromBoard(String thisPiece){
         Piece temp = createNewPiece(thisPiece);
         int[][] tempMat = temp.toMatrix();
@@ -88,9 +102,8 @@ public class FitGame {
     /**
      * Check if this piece is conflict with other piece on board
      *
-     * @param: the String that describe the piece
-     *
-     * @return The piece in type Piece
+     * @param thisPiece The String that describe the piece
+     * @return: A boolean value
      */
     public static boolean canPieceBePlaced(String thisPiece){
         if (!isPiecePlacementWellFormed(thisPiece))
@@ -141,8 +154,7 @@ public class FitGame {
         return true;
     }
 
-
-    /**
+    /** Implement task 2
      * Determine whether a piece placement is well-formed according to the
      * following criteria:
      * - it consists of exactly four characters
@@ -154,7 +166,6 @@ public class FitGame {
      * @param piecePlacement A string describing a piece placement
      * @return True if the piece placement is well-formed
      */
-
     static boolean isPiecePlacementWellFormed(String piecePlacement) {
         if (piecePlacement.length() != 4)
             return false;
@@ -170,7 +181,7 @@ public class FitGame {
         return true; // FIXME Task 2: determine whether a piece placement is well-formed
     }
 
-    /**
+    /** Implement task 3
      * Determine whether a placement string is well-formed:
      * - it consists of exactly N four-character piece placements (where N = 1 .. 10);
      * - each piece placement is well-formed
@@ -208,7 +219,7 @@ public class FitGame {
         return true; // FIXME Task 3: determine whether a placement is well-formed
     }
 
-    /**
+    /** Implement task 5
      * Determine whether a placement string is valid.
      *
      * To be valid, the placement string must be:
@@ -251,7 +262,7 @@ public class FitGame {
         return true; // FIXME Task 5: determine whether a placement string is valid
     }
 
-    /**
+    /** Implement task 6
      * Given a string describing a placement of pieces, and a location
      * that must be covered by the next move, return a set of all
      * possible next viable piece placements which cover the location.
@@ -313,12 +324,13 @@ public class FitGame {
         else{return null;}
     }// FIXME Task 6: determine the set of all viable piece placements given existing placements
 
-    /**
+    /** Implement task 9
      * Return the solution to a particular challenge.
-     **
+     * This task includes 6 methods (From getSolution() to helper())
+     *
      * @param challenge A challenge string.
      * @return A placement string describing the encoding of the solution to
-     * the challenge.
+     *         the challenge.
      */
     public static String getSolution(String challenge) {
         solution = "";
@@ -326,7 +338,9 @@ public class FitGame {
         return solution;
         // FIXME Task 9: determine the solution to the game, given a particular challenge
     }
-    //    DFS searching
+    /**
+     * DFS searching
+     */
     public static void dfs(String challenge){
         if(challenge !=null){
             if (challenge.length()==40){
@@ -362,8 +376,9 @@ public class FitGame {
             }
         }
     }
-
-    //     find the next position to place pieces
+    /**
+     * Find the next position to place pieces
+     */
     public static int[] getNextPos(){
         for (int i=0; i<10;i++){
             for (int j=0;j<5;j++){
@@ -374,7 +389,9 @@ public class FitGame {
         }
         return null;
     }
-    //    add piece string to the board string
+    /**
+     * Add piece string to the board string
+     */
     public static String sortAdd(String a, String Piece){
         String res = "";
         ArrayList<String> B = new ArrayList<>();
@@ -388,7 +405,9 @@ public class FitGame {
         }
         return res;
     }
-    //    delete piece string from the board string
+    /**
+     * Delete piece string from the board string
+     */
     public static String sortDelete(String a, String Piece){
         StringBuilder A = new StringBuilder(a);
         for (int i = 0; i < a.length()/4; i++){
@@ -398,16 +417,16 @@ public class FitGame {
         }
         return null;
     }
-    //    stop searching if impossible cases happen (i.e. a blank is surrounded by pieces)
+    /**
+     *  Stop searching if impossible cases happen (i.e. a blank is surrounded by pieces)
+     */
     public static boolean helper(){
-//        check corner
+//      check corner
         if(Board[0][0]==0 && Board[0][1] == 1 && Board[1][0]==1){return false;}
         if(Board[4][0]==0 && Board[3][0] == 1 && Board[4][1]==1){return false;}
         if(Board[0][9]==0 && Board[1][9] == 1 && Board[0][8]==1){return false;}
         if(Board[4][9]==0 && Board[3][9] == 1 && Board[4][8]==1){return false;}
-
-
-//        check center with 1 blank
+//      check center with 1 blank
         for(int i=1;i<4;i++){
             for(int j=1;j<9;j++){
                 if(Board[i][j]==0 && Board[i][j+1] == 1 && Board[i+1][j]==1 && Board[i-1][j] == 1 && Board[i][j-1]==1){
@@ -415,8 +434,7 @@ public class FitGame {
                 }
             }
         }
-
-//        check edge
+//      check edge
         for (int i=1;i<4;i++){
             if (Board[i][0]==0 && Board[i-1][0]==1 && Board[i+1][0]==1 && Board[i][1]==1){return false;}
             if (Board[i][9]==0 && Board[i-1][9]==1 && Board[i+1][9]==1 && Board[i][8]==1){return false;}
@@ -429,28 +447,6 @@ public class FitGame {
     }
 
 
-    /** we are going to use DFS to solve this puzzle
-     * String DFS(String challenge){}
-     * Given a string challenge, we first convert it into a board matrix (5*10)
-     * Second, check all pieces on the board and determine which pieces are not on the board
-     * create a hashset to store the pieces that we are going to select
-     * find the left top position that is not placed on any pieces on the current board matrix
-     * if there is no such a position exists, it  means every entry of the board matrix is full
-     * then return current string placement
-     * if return a top left position, we use getViablePiecePlacements() to find possible pieces set
-     * then we use a for loop to select appropriate piece in the set that can be put on the board according to the piece type order
-     * if this piece is not in the hashset
-     * add the selected piece to the board, also add it to the hashset
-     * update the board matrix and corresponding string newplacement
-     * recursively to find the new piece: DFS(Sting newplacement)
-     * if we cannot find the piece we need, we should traceback to the last top left position and continue the for loop to select new piece
-     * delete the previously selected piece from the board
-     * update the board matrix
-     * update new string placement
-     * also delete it from the hashset
-     * end the for loop
-     */
-
     /**
      * This method compares the current string of all the pieces on the board with the final answer.
      * and it will return a string that represent all the pieces that haven't been correctly put.
@@ -459,7 +455,7 @@ public class FitGame {
      * @param currentString The current pieces statement on the board.
      * @param ans The final string of the current game.
      *
-     * @return A string that represents all the pieces that haven't been correctly placed.
+     * @return pieceList A string that represents all the pieces that haven't been correctly placed.
      *         eg: String "BNiEoW" means that B/i/o haven't been well placed,
      *         and they should in direction North/East/West.
      */
@@ -490,7 +486,6 @@ public class FitGame {
         }
         return pieceList;
     }
-
 
     /**
      * Input the piecePlacement String on board
@@ -526,8 +521,21 @@ public class FitGame {
         }
         return null;
     }
-    //    Task 11
-    //    DFS searching
+
+    /** Implement task 11
+     * Creates challenges of various degrees of difficulty.
+     * This task includes 3 methods.
+     *
+     * The recursive methods 'GeneratePieces()' use dfs searching to randomly generate a string that
+     * describe a final statement of pieces on board.
+     *
+     * The method 'GenerateSolutions()' will generate a challenge according to the random string.
+     * The challenge should have only one solution.
+     *
+     */
+    /**
+     * DFS searching
+     */
     public static void dfs2(String challenge){
         if(challenge !=null){
             if (challenge.length()==40){
@@ -560,7 +568,6 @@ public class FitGame {
                             if (solutionBox.size() == 2){
                                 return;
                             }
-//                            if (!solution.equals("")){return;}
                             challenge = sortDelete(challenge, k);
                             deleteFromBoard(k);
                         }
@@ -569,6 +576,9 @@ public class FitGame {
             }
         }
     }
+    /**
+     * Create a random final statement of pieces
+     */
     public static void GeneratePieces(){
         solution = "";
         solutionBox.clear();
@@ -588,6 +598,9 @@ public class FitGame {
             GeneratePieces();
         }
     }
+    /**
+     * Generate a challenge according to a random answer(/final statement of pieces)
+     */
     public static String GenerateSolutions(int difficulty){
         GeneratePieces();
         switch (difficulty){
@@ -686,10 +699,5 @@ public class FitGame {
                 return GenerateSolutions(4);
         }
     }
-
-
-
-    public static void main(String[] args) {
-        System.out.println(GenerateSolutions(0));
-    }
+    //public static void main(String[] args) {System.out.println(GenerateSolutions(0)); }
 }
