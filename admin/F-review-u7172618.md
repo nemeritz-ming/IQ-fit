@@ -1,6 +1,6 @@
 ## Code Review
 
-Reviewed by: <MingLei>, <u7172618>
+Reviewed by: <MingLei> <u7172618>
 
 Reviewing code written by: <XinyiJiang> <u6891814>
 
