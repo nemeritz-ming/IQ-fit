@@ -1,0 +1,27 @@
+Index: tests/comp1110/ass2/PieceSpotTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- tests/comp1110/ass2/PieceSpotTest.java	(date 1601339782291)
++++ tests/comp1110/ass2/PieceSpotTest.java	(date 1601339782291)
+@@ -0,0 +1,19 @@
++package comp1110.ass2;
++
++
++
++import org.junit.Rule;
++import org.junit.Test;
++import org.junit.rules.Timeout;
++
++
++public class PieceSpotTest {
++    @Rule
++    public Timeout globalTimeout = Timeout.millis(500);
++    private void test(String pieceOnBoard, int x, int y, String expected) {
++
++
++
++    }
++
++}
