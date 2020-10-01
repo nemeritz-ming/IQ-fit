@@ -699,5 +699,5 @@ public class FitGame {
                 return GenerateSolutions(4);
         }
     }
-    //public static void main(String[] args) {System.out.println(GenerateSolutions(0)); }
+    public static void main(String[] args) {System.out.println(GenerateSolutions(5)); }
 }
