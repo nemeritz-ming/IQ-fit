@@ -10,6 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -344,6 +345,12 @@ public class Board extends Application {
     }
 
     private void makeControls(){
+        Text hintMassage = new Text();
+        hintMassage.setText("Show Hints By Pressing '/' ");
+        hintMassage.setFill(Color.BLACK);
+        hintMassage.setX(70);
+        hintMassage.setY(600);
+        hintMassage.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         Button button = new Button("Restart");
         button.setLayoutX(BOARD_X  + 20);
         button.setLayoutY(VIEWER_HEIGHT - 175);
@@ -358,6 +365,7 @@ public class Board extends Application {
         button2.setOnAction(e -> newGame());
         controls.getChildren().add(button);
         controls.getChildren().add(button2);
+        controls.getChildren().add(hintMassage);
 
         difficulty.setMin(1);
         difficulty.setMax(5);
@@ -367,7 +375,7 @@ public class Board extends Application {
         difficulty.setMajorTickUnit(1);
         difficulty.setMinorTickCount(0);
         difficulty.setSnapToTicks(true);
-
+        difficulty.setOnMouseClicked(e -> newGame());
         difficulty.setLayoutX(BOARD_X  + 460);
         difficulty.setLayoutY(VIEWER_HEIGHT - 175);
         controls.getChildren().add(difficulty);
@@ -435,7 +443,7 @@ public class Board extends Application {
         primaryStage.setTitle("IQ-Fit");
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
         scene.setOnKeyTyped(keyEvent -> {
-            if (keyEvent.getCharacter().equals("/")){
+            if (keyEvent.getCharacter().equals("/") || keyEvent.toString().equals("/")){
                 String HintString = FitGame.findWrongPieces(tempGame, GameSolution);
                 double width = 600;
                 double height = 115;
@@ -497,6 +505,7 @@ public class Board extends Application {
         makeBoard();
         makeControls();
         delete();
+        newGame();
         primaryStage.setScene(scene);
         primaryStage.show();
     }
