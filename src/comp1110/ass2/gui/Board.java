@@ -443,6 +443,10 @@ public class Board extends Application {
         primaryStage.setTitle("IQ-Fit");
         Scene scene = new Scene(root, VIEWER_WIDTH, VIEWER_HEIGHT);
         scene.setOnKeyTyped(keyEvent -> {
+            if(keyEvent.getCharacter().equals("q")||keyEvent.getCharacter().equals("Q")){
+                Platform.exit();
+                keyEvent.consume();
+            }
             if (keyEvent.getCharacter().equals("/") || keyEvent.toString().equals("/")){
                 String HintString = FitGame.findWrongPieces(tempGame, GameSolution);
                 double width = 600;
