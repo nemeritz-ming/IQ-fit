@@ -14,6 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -345,12 +346,6 @@ public class Board extends Application {
     }
 
     private void makeControls(){
-        Text hintMassage = new Text();
-        hintMassage.setText("Show Hints By Pressing '/' ");
-        hintMassage.setFill(Color.BLACK);
-        hintMassage.setX(70);
-        hintMassage.setY(600);
-        hintMassage.setFont(Font.font("Verdana", FontWeight.BOLD, 20));
         Button button = new Button("Restart");
         button.setLayoutX(BOARD_X  + 20);
         button.setLayoutY(VIEWER_HEIGHT - 175);
@@ -363,9 +358,15 @@ public class Board extends Application {
         button2.setPrefHeight(30);
         button2.setPrefWidth(150);
         button2.setOnAction(e -> newGame());
+        Button button3 = new Button("How to play?");
+        button3.setLayoutX(BOARD_X  + 30);
+        button3.setLayoutY(VIEWER_HEIGHT - 125);
+        button3.setPrefHeight(30);
+        button3.setPrefWidth(300);
+        button3.setOnAction(e -> tellMeHowToPlay());
         controls.getChildren().add(button);
         controls.getChildren().add(button2);
-        controls.getChildren().add(hintMassage);
+        controls.getChildren().add(button3);
 
         difficulty.setMin(1);
         difficulty.setMax(5);
@@ -436,6 +437,32 @@ public class Board extends Application {
         tempGame = Game;
         makePiece(Game);
         makeSelect();
+    }
+
+    private void tellMeHowToPlay(){
+        Stage newWindow = new Stage();
+        newWindow.setTitle("How to play?");
+        StackPane root = new StackPane();
+        Scene scene = new Scene(root, 600, 300);
+        newWindow.setScene(scene);
+
+        Text instruction = new Text("Instructions:" + "\r\n" +
+                "* Drag the slider 'Difficulty' to select difficulty" + "\r\n" +
+                "* Press 'New Game' to start a new game" + "\r\n" +
+                "* Press 'Restart' to restart the current game" + "\r\n" +
+                "* Left click the pieces in the menu to change the orientation" + "\r\n" +
+                "* Drag a piece to board to add the new piece on board" + "\r\n" +
+                "* Left click pieces on the board to remove it" + "\r\n" +
+                "* Press '/' on keyboard to find hints" + "\r\n" +
+                "* Press 'Q' on keyboard to quit the game");
+        instruction.setFont(Font.font("Tahoma", FontWeight.LIGHT, 20));
+        instruction.setFill(Color.BLACK);
+        //hi.setOpacity(0.5);
+        //newWindow.setOpacity(1);
+
+        root.getChildren().add(instruction);
+        newWindow.show();
+
     }
 
     @Override
