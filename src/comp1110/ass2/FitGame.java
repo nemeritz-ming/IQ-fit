@@ -57,7 +57,7 @@ public class FitGame {
      * if the placement is viable. If it is, the method will update
      * the board[][] as well as update the string
      *
-     * @param A String that describe the piece that want to add
+     * @param thisPiece A String that describe the piece that want to add
      *         to the board
      */
     public static void addToBoard(String thisPiece){
