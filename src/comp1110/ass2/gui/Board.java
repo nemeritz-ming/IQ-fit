@@ -453,7 +453,8 @@ public class Board extends Application {
                 "* Left click the pieces in the menu to change the orientation" + "\r\n" +
                 "* Drag a piece to board to add the new piece on board" + "\r\n" +
                 "* Left click pieces on the board to remove it" + "\r\n" +
-                "* Press '/' on keyboard to find hints");
+                "* Press '/' on keyboard to find hints" + "\r\n" +
+                "* Press 'Q' on keyboard to quit the game");
         instruction.setFont(Font.font("Tahoma", FontWeight.LIGHT, 20));
         instruction.setFill(Color.BLACK);
         //hi.setOpacity(0.5);
