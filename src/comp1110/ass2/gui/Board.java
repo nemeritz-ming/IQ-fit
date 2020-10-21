@@ -364,9 +364,16 @@ public class Board extends Application {
         button3.setPrefHeight(30);
         button3.setPrefWidth(300);
         button3.setOnAction(e -> tellMeHowToPlay());
+        Button button4 = new Button("Start a random game");
+        button4.setLayoutX(BOARD_X  + 30);
+        button4.setLayoutY(VIEWER_HEIGHT - 75);
+        button4.setPrefHeight(30);
+        button4.setPrefWidth(300);
+        button4.setOnAction(e -> createARandomGame());
         controls.getChildren().add(button);
         controls.getChildren().add(button2);
         controls.getChildren().add(button3);
+        controls.getChildren().add(button4);
 
         difficulty.setMin(1);
         difficulty.setMax(5);
@@ -438,18 +445,37 @@ public class Board extends Application {
         makePiece(Game);
         makeSelect();
     }
+    //Start a random game
+    private void createARandomGame(){
+        try {
+            hideCompletion();
+            int diff = (int) difficulty.getValue() - 1;
+            String robjective = FitGame.GenerateSolutions(diff);
+            String rplacement = FitGame.getSolution(robjective);
+            Game = robjective;
+            tempGame = Game;
+            GameSolution = rplacement;
+            makePiece(Game);
+            makeSelect();
+        } catch (IllegalArgumentException e) {
+            System.err.println("Uh oh. " + e);
+            e.printStackTrace();
+            Platform.exit();
+        }
+    }
 
     private void tellMeHowToPlay(){
         Stage newWindow = new Stage();
         newWindow.setTitle("How to play?");
         StackPane root = new StackPane();
-        Scene scene = new Scene(root, 600, 300);
+        Scene scene = new Scene(root, 700, 300);
         newWindow.setScene(scene);
 
         Text instruction = new Text("Instructions:" + "\r\n" +
                 "* Drag the slider 'Difficulty' to select difficulty" + "\r\n" +
                 "* Press 'New Game' to start a new game" + "\r\n" +
                 "* Press 'Restart' to restart the current game" + "\r\n" +
+                "* Press 'Start a random game' to start a game that is not from 'SOLUTION'" + "\r\n" +
                 "* Left click the pieces in the menu to change the orientation" + "\r\n" +
                 "* Drag a piece to board to add the new piece on board" + "\r\n" +
                 "* Left click pieces on the board to remove it" + "\r\n" +
