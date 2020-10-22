@@ -6,20 +6,20 @@ import jdk.jfr.StackTrace;
 import java.util.*;
 
 
-/**
- * This class provides the text interface for the IQ Fit Game
- * <p>
- * The game is based directly on Smart Games' IQ-Fit game
- * (https://www.smartgames.eu/uk/one-player-games/iq-fit)
- */
-public class FitGame {
-    public static int[][] Board = {{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
-    public static String solution = "";
-    public static List<String> solutionBox = new ArrayList<>();
-    public static int tlx = -1;
-    public static int tly = -1;
-    public static void initial(){
-        Board =new int[][] {{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
+    /**
+    * This class provides the text interface for the IQ Fit Game
+    * <p>
+    * The game is based directly on Smart Games' IQ-Fit game
+    * (https://www.smartgames.eu/uk/one-player-games/iq-fit)
+    */
+    public class FitGame {
+        public static int[][] Board = {{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
+        public static String solution = "";
+        public static List<String> solutionBox = new ArrayList<>();
+        public static int tlx = -1;
+        public static int tly = -1;
+        public static void initial(){
+            Board =new int[][] {{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
     }
 
     /**
