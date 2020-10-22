@@ -364,7 +364,7 @@ public class Board extends Application {
         button3.setPrefHeight(30);
         button3.setPrefWidth(300);
         button3.setOnAction(e -> tellMeHowToPlay());
-        Button button4 = new Button("Start a random game");
+        Button button4 = new Button("Improvise a game");
         button4.setLayoutX(BOARD_X  + 30);
         button4.setLayoutY(VIEWER_HEIGHT - 75);
         button4.setPrefHeight(30);
@@ -468,14 +468,14 @@ public class Board extends Application {
         Stage newWindow = new Stage();
         newWindow.setTitle("How to play?");
         StackPane root = new StackPane();
-        Scene scene = new Scene(root, 700, 300);
+        Scene scene = new Scene(root, 750, 300);
         newWindow.setScene(scene);
 
         Text instruction = new Text("Instructions:" + "\r\n" +
                 "* Drag the slider 'Difficulty' to select difficulty" + "\r\n" +
                 "* Press 'New Game' to start a new game" + "\r\n" +
                 "* Press 'Restart' to restart the current game" + "\r\n" +
-                "* Press 'Start a random game' to start a game that is not from 'SOLUTION'" + "\r\n" +
+                "* Press 'Improvise a game' to start a game that is not from the question bank" + "\r\n" +
                 "* Left click the pieces in the menu to change the orientation" + "\r\n" +
                 "* Drag a piece to board to add the new piece on board" + "\r\n" +
                 "* Left click pieces on the board to remove it" + "\r\n" +
