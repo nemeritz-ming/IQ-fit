@@ -19,8 +19,14 @@ declaration: >-
 # Add as many "name+comment" entries as necessary
 # (or remove it altogether if you haven't collaborated with anyone)
 collaboration:
-  - name:
+  - name: Xinyi Jiang
     comment: >-
+      We collaborated on my delete method. I wrote a method in UI to delete pieces from board by clicking the pieces>-
+      And Jiang wrote a method to return the pieces or null given its position.
+  - name: Duo Liu
+    comment: >-
+      We collaborated on Task 10 (make hints). He wrote a method to find all the wrong placed pieces on the board >-
+      And I wrote the making-hints method.
 
 # Use this to list any code that you used that you did not write,
 # aside from code provided by the lecturer.  Provide a comment
@@ -29,23 +35,45 @@ collaboration:
 #
 # Add as many "url+licence+comment" entries as necessary
 # (or remove it altogether if you haven't used any external code)
-code:
-  - comment:
-    url:
-    licence:
+
 
 # I wish to submit the following classes as entirely my own (remove this if
 # you want to just submit methods):
 class:
-   - 
-   - 
+   - Viewer
+   - Board
 
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
 method:
-   - 
-   - 
+   - makePlacement()
+   - makeBoard()
+   - makePiece()
+   - delete()
+   - makeSelect()
+   - transfer()
+   - canMove()
+   - makeControls()
+   - makeCompletion()
+   - checkCompletionUi()
+   - showCompletion()
+   - hideCompletion()
+   - newGame()
+   - restart()
+   - createARandomGame()
+   - tellMeHowToPlay()
+   - start()
+   - getViablePiecePlacements()
+   - getSolution()
+   - dfs()
+   - dfs2()
+   - getNextPos()
+   - sortAdd()
+   - sortDelete()
+   - helper()
+   - GeneratePieces()
+   - GenerateSolutions()
 
 # sign *your* name and uid here
-name:
-uid:
+name: Ming Lei
+uid: u7172618

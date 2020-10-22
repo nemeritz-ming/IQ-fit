@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
@@ -71,7 +70,7 @@ public class Board extends Application {
     private static String Game;
 
 
-
+//  make the board
     private void makeBoard(){
         board.getChildren().clear();
         ImageView baseboard = new ImageView();
@@ -137,6 +136,7 @@ public class Board extends Application {
         }
 
     }
+//    delete pieces from the board
     private void delete(){
         pieces.setOnMouseClicked(e -> {
             if (e.getButton() == MouseButton.PRIMARY){
@@ -344,7 +344,7 @@ public class Board extends Application {
             return FitGame.canPieceBePlaced(pieceType);}
         return false;
     }
-
+//    make buttons on the board
     private void makeControls(){
         Button button = new Button("Restart");
         button.setLayoutX(BOARD_X  + 20);
@@ -404,7 +404,7 @@ public class Board extends Application {
         completionText.setTextAlignment(TextAlignment.CENTER);
         root.getChildren().add(completionText);
     }
-
+//    check the completion
     private void checkCompletionUi(){
         if(FitGame.checkCompletion()){
             showCompletion();
@@ -566,7 +566,4 @@ public class Board extends Application {
         primaryStage.setScene(scene);
         primaryStage.show();
     }
-//    public static void main(String[] args) {
-//        System.out.println(transfer("B1", 0,230, 320));
-//    }
 }
