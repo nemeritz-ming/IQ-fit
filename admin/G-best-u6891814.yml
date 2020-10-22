@@ -20,16 +20,16 @@ declaration: >-
 # (or remove it altogether if you haven't collaborated with anyone)
 collaboration:
   - name: Ming Lei
-    comment: >- 
+    comment: >- Write findPieceSpotOnBoard method to complete the function to remove pieces from board.
   - name: Duo Liu
-    comment: >- 
+    comment: >- Write toMatrix function to put every pieces on board
 
 
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
 method:
-   - [toMatrix](https://gitlab.cecs.anu.edu.au/u6891814/comp1110-ass2-tue15h/-/blob/master/src/comp1110/ass2/Piece.java#L21-102)
-   - [findPieceSpotOnBoard](https://gitlab.cecs.anu.edu.au/u6891814/comp1110-ass2-tue15h/-/blob/master/src/comp1110/ass2/FitGame.java#L490-523)
+   - toMatrix
+   - findPieceSpotOnBoard
 
 # sign *your* name and uid here
 name: Xinyi Jiang
