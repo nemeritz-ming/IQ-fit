@@ -21,17 +21,25 @@ declaration: >-
 collaboration:
   - name: Ming Lei
     comment: >-
-      Write findPieceSpotOnBoard method to complete the function to remove pieces from board.
+      Write findPieceSpotOnBoard method to complete the function to remove pieces from board and add quit method by Pressing Q
   - name: Duo Liu
     comment: >-
       Write toMatrix function to put every pieces on board
 
+# I wish to submit the following classes as entirely my own (remove this if
+# you want to just submit methods):
+class:
+  - Piece
 
 # I wish to submit the following methods as entirely my own (remove this if
 # you want to just submit classes):
 method:
-   - toMatrix
-   - findPieceSpotOnBoard
+  - Piece()
+  - toMatrix()
+  - getTopLeftX()
+  - getTopLeftY()
+  - findPieceSpotOnBoard()
+  - start()
 
 # sign *your* name and uid here
 name: Xinyi Jiang
