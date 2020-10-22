@@ -21,8 +21,8 @@ declaration: >-
 collaboration:
   - name: Ming Lei
     comment: >-
-    We collaborated on task10. I wrote a method to find all the wrong placed pieces on the board.>-
-    And Ming prints those pieces on the interface.
+      We collaborated on task10. I wrote a method to find all the wrong placed pieces on the board.>-
+      And Ming prints those pieces on the interface.
 
 
 
