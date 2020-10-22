@@ -20,9 +20,11 @@ declaration: >-
 # (or remove it altogether if you haven't collaborated with anyone)
 collaboration:
   - name: Ming Lei
-    comment: >- Write findPieceSpotOnBoard method to complete the function to remove pieces from board.
+    comment: >- 
+    Write findPieceSpotOnBoard method to complete the function to remove pieces from board.
   - name: Duo Liu
-    comment: >- Write toMatrix function to put every pieces on board
+    comment: >- 
+    Write toMatrix function to put every pieces on board
 
 
 # I wish to submit the following methods as entirely my own (remove this if
