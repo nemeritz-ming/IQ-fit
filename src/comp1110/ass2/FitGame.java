@@ -5,7 +5,7 @@ import jdk.jfr.StackTrace;
 
 import java.util.*;
 
-
+    /*This method is authored by Ming Lei*/
     /**
     * This class provides the text interface for the IQ Fit Game
     * <p>
@@ -22,6 +22,7 @@ import java.util.*;
             Board =new int[][] {{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0},{0,0,0,0,0,0,0,0,0,0}};
     }
 
+    /*This method is authored by Ming Lei*/
     /**
      * Check if the game has ended
      *
@@ -38,6 +39,7 @@ import java.util.*;
         return true;
     }
 
+    /*This method is authored by Duo Liu*/
     /**
      * Given the four characters string of a piece. If such
      * piece can be placed on the board, create the piece.
@@ -52,6 +54,7 @@ import java.util.*;
             return null;
     }
 
+    /*This method is authored by Duo Liu*/
     /**
      * Add a new piece on the board, this will include checking
      * if the placement is viable. If it is, the method will update
@@ -75,6 +78,7 @@ import java.util.*;
         }
     }
 
+    /*This method is authored by Ming Lei*/
     /**
      * Delete a piece from the board, this will include checking
      * if the action is viable. If it is, the method will update
@@ -99,6 +103,7 @@ import java.util.*;
         }
     }
 
+    /*This method is authored by Duo Liu*/
     /**
      * Check if this piece is conflict with other piece on board
      *
@@ -129,6 +134,7 @@ import java.util.*;
         return true;
     }
 
+    /*This method is authored by Ming Lei*/
     /**
      * check if the piece (or its brother) has been used
      *
@@ -154,6 +160,7 @@ import java.util.*;
         return true;
     }
 
+        /*This method is authored by Duo Liu*/
     /** Implement task 2
      * Determine whether a piece placement is well-formed according to the
      * following criteria:
@@ -181,6 +188,7 @@ import java.util.*;
         return true; // FIXME Task 2: determine whether a piece placement is well-formed
     }
 
+        /*This method is authored by Duo Liu*/
     /** Implement task 3
      * Determine whether a placement string is well-formed:
      * - it consists of exactly N four-character piece placements (where N = 1 .. 10);
@@ -219,6 +227,7 @@ import java.util.*;
         return true; // FIXME Task 3: determine whether a placement is well-formed
     }
 
+        /*This method is authored by Duo Liu*/
     /** Implement task 5
      * Determine whether a placement string is valid.
      *
@@ -262,6 +271,7 @@ import java.util.*;
         return true; // FIXME Task 5: determine whether a placement string is valid
     }
 
+        /*This method is authored by Ming Lei*/
     /** Implement task 6
      * Given a string describing a placement of pieces, and a location
      * that must be covered by the next move, return a set of all
@@ -324,6 +334,7 @@ import java.util.*;
         else{return null;}
     }// FIXME Task 6: determine the set of all viable piece placements given existing placements
 
+        /*These methods are authored by Ming Lei*/
     /** Implement task 9
      * Return the solution to a particular challenge.
      * This task includes 6 methods (From getSolution() to helper())
@@ -447,6 +458,7 @@ import java.util.*;
     }
 
 
+        /*This method is authored by Duo Liu*/
     /**
      * This method compares the current string of all the pieces on the board with the final answer.
      * and it will return a string that represent all the pieces that haven't been correctly put.
@@ -487,6 +499,7 @@ import java.util.*;
         return pieceList;
     }
 
+        /*This method is authored by Xinyi Jiang*/
     /**
      * Input the piecePlacement String on board
      * First we will divide the String to each real piece String
@@ -522,6 +535,7 @@ import java.util.*;
         return null;
     }
 
+        /*These methods are authored by Ming Lei*/
     /** Implement task 11
      * Creates challenges of various degrees of difficulty.
      * This task includes 3 methods.

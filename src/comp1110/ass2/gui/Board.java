@@ -69,7 +69,7 @@ public class Board extends Application {
     private static String GameSolution;
     private static String Game;
 
-
+    /*This method is authored by Ming Lei*/
 //  make the board
     private void makeBoard(){
         board.getChildren().clear();

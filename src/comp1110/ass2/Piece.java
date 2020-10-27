@@ -1,3 +1,4 @@
+/*This class is modified by Xinyi Jiang*/
 package comp1110.ass2;
 
 /*

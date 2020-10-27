@@ -1,3 +1,4 @@
+/*This class is authored by Ming Lei*/
 package comp1110.ass2.gui;
 
 
