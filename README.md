@@ -1,4 +1,4 @@
-# COMP1110 Assignment 2
+# IQ-Fit
 
 ## Academic Honesty and Integrity
 
@@ -335,25 +335,3 @@ user's (i.e.  your tutor's) account on a standard lab machine (in
 other words, your game must not depend on features not self-contained
 within that jar file and the Java 13 runtime).
 
-<a name="2p"></a>
-**Pass**
-* Correctly implements all of the <b>Part One</b> criteria.
-* Appropriate use of git (as demonstrated by the history of your repo).
-* Completion of Task #6
-* Executable on a standard lab computer from a runnable jar file,
-  game.jar, which resides in the root level of your group repo.
-
-<a name="2c"></a>
-**Credit**
-* _All of the Pass-level criteria, plus the following..._
-* Task #7
-
-<a name="2d"></a>
-**Distinction**
-* _All of the Credit-level criteria, plus the following..._
-* Tasks #8 and #9
-
-<a name="2hd"></a>
-**High Distinction**
-* _All of the Distinction-level criteria, plus the following..._
-* Tasks #10 and #11
